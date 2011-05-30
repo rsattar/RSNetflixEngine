@@ -3,13 +3,16 @@
 //  RSNetflixEngine
 //
 //  Created by Rizwan on 5/29/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Rizwan Sattar. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "RSNetflixEngine.h"
 
 @interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate> {
 
+    RSNetflixEngine *netflix;
+    
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

@@ -16,6 +16,9 @@
 		6595FC9A1393364E0061AA35 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC981393364E0061AA35 /* MainWindow.xib */; };
 		6595FC9D1393364E0061AA35 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FC9C1393364E0061AA35 /* RootViewController.m */; };
 		6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC9E1393364E0061AA35 /* RootViewController.xib */; };
+		6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCA8139338FA0061AA35 /* RSNetflixEngine.m */; };
+		6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCAB13934D1E0061AA35 /* RSURLLoader.m */; };
+		6595FCB1139364BA0061AA35 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCB0139364BA0061AA35 /* Base64Transcoder.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,16 +26,23 @@
 		6595FC861393364D0061AA35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6595FC881393364D0061AA35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6595FC8A1393364E0061AA35 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6595FC8E1393364E0061AA35 /* RSNetflixEngine-Info.plist */ = {isa = PBXFileReference; path = "RSNetflixEngine-Info.plist"; sourceTree = "<group>"; };
+		6595FC8E1393364E0061AA35 /* RSNetflixEngine-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSNetflixEngine-Info.plist"; sourceTree = "<group>"; };
 		6595FC901393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6595FC921393364E0061AA35 /* RSNetflixEngine-Prefix.pch */ = {isa = PBXFileReference; path = "RSNetflixEngine-Prefix.pch"; sourceTree = "<group>"; };
+		6595FC921393364E0061AA35 /* RSNetflixEngine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSNetflixEngine-Prefix.pch"; sourceTree = "<group>"; };
 		6595FC931393364E0061AA35 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6595FC951393364E0061AA35 /* RSNetflixEngineAppDelegate.h */ = {isa = PBXFileReference; path = RSNetflixEngineAppDelegate.h; sourceTree = "<group>"; };
+		6595FC951393364E0061AA35 /* RSNetflixEngineAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSNetflixEngineAppDelegate.h; sourceTree = "<group>"; };
 		6595FC961393364E0061AA35 /* RSNetflixEngineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSNetflixEngineAppDelegate.m; sourceTree = "<group>"; };
 		6595FC991393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		6595FC9B1393364E0061AA35 /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		6595FC9B1393364E0061AA35 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		6595FC9C1393364E0061AA35 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		6595FC9F1393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
+		6595FCA7139338FA0061AA35 /* RSNetflixEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNetflixEngine.h; sourceTree = "<group>"; };
+		6595FCA8139338FA0061AA35 /* RSNetflixEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNetflixEngine.m; sourceTree = "<group>"; };
+		6595FCAA13934D1E0061AA35 /* RSURLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLLoader.h; sourceTree = "<group>"; };
+		6595FCAB13934D1E0061AA35 /* RSURLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSURLLoader.m; sourceTree = "<group>"; };
+		6595FCAD139362630061AA35 /* RSCryptoUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCryptoUtilities.h; sourceTree = "<group>"; };
+		6595FCAF1393649C0061AA35 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
+		6595FCB0139364BA0061AA35 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,8 @@
 		6595FC771393364D0061AA35 = {
 			isa = PBXGroup;
 			children = (
+				6595FCAE139364740061AA35 /* Crypto */,
+				6595FCA6139338C10061AA35 /* Source */,
 				6595FC8C1393364E0061AA35 /* RSNetflixEngine */,
 				6595FC851393364D0061AA35 /* Frameworks */,
 				6595FC831393364D0061AA35 /* Products */,
@@ -99,6 +111,27 @@
 				6595FC931393364E0061AA35 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6595FCA6139338C10061AA35 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6595FCA7139338FA0061AA35 /* RSNetflixEngine.h */,
+				6595FCA8139338FA0061AA35 /* RSNetflixEngine.m */,
+				6595FCAA13934D1E0061AA35 /* RSURLLoader.h */,
+				6595FCAB13934D1E0061AA35 /* RSURLLoader.m */,
+				6595FCAD139362630061AA35 /* RSCryptoUtilities.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		6595FCAE139364740061AA35 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				6595FCAF1393649C0061AA35 /* Base64Transcoder.h */,
+				6595FCB0139364BA0061AA35 /* Base64Transcoder.c */,
+			);
+			name = Crypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +197,9 @@
 				6595FC941393364E0061AA35 /* main.m in Sources */,
 				6595FC971393364E0061AA35 /* RSNetflixEngineAppDelegate.m in Sources */,
 				6595FC9D1393364E0061AA35 /* RootViewController.m in Sources */,
+				6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */,
+				6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */,
+				6595FCB1139364BA0061AA35 /* Base64Transcoder.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

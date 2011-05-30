@@ -3,7 +3,7 @@
 //  RSNetflixEngine
 //
 //  Created by Rizwan on 5/29/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Rizwan Sattar. All rights reserved.
 //
 
 #import "RSNetflixEngineAppDelegate.h"
@@ -17,10 +17,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     // Override point for customization after application launch.
     // Add the navigation controller's view to the window and display.
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
+    
+    
+    // Initialize RSNetflixEngine
+    netflix = [[RSNetflixEngine alloc] initWithConsumerKey:@"rwbq7xmey8xhtv8tszrgk2gp" sharedSecret:@"xQ57dwQFtK" applicationName:@"Movies on Netflix"];
+    // Make a test call
+    //[netflix callAPIMethod:@"catalog/titles/autocomplete" arguments:[NSDictionary dictionaryWithObjectsAndKeys:[netflix consumerKey],@"oauth_consumer_key",@"frances%20mc",@"term", nil] isSigned:NO];
+    
+    [netflix callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     return YES;
 }
 
@@ -67,6 +77,7 @@
 {
     [_window release];
     [_navigationController release];
+    [netflix release];
     [super dealloc];
 }
 
