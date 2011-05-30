@@ -1,0 +1,283 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6595FC871393364D0061AA35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC861393364D0061AA35 /* UIKit.framework */; };
+		6595FC891393364E0061AA35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC881393364D0061AA35 /* Foundation.framework */; };
+		6595FC8B1393364E0061AA35 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC8A1393364E0061AA35 /* CoreGraphics.framework */; };
+		6595FC911393364E0061AA35 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC8F1393364E0061AA35 /* InfoPlist.strings */; };
+		6595FC941393364E0061AA35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FC931393364E0061AA35 /* main.m */; };
+		6595FC971393364E0061AA35 /* RSNetflixEngineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FC961393364E0061AA35 /* RSNetflixEngineAppDelegate.m */; };
+		6595FC9A1393364E0061AA35 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC981393364E0061AA35 /* MainWindow.xib */; };
+		6595FC9D1393364E0061AA35 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FC9C1393364E0061AA35 /* RootViewController.m */; };
+		6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC9E1393364E0061AA35 /* RootViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6595FC821393364D0061AA35 /* RSNetflixEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSNetflixEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6595FC861393364D0061AA35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6595FC881393364D0061AA35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6595FC8A1393364E0061AA35 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6595FC8E1393364E0061AA35 /* RSNetflixEngine-Info.plist */ = {isa = PBXFileReference; path = "RSNetflixEngine-Info.plist"; sourceTree = "<group>"; };
+		6595FC901393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6595FC921393364E0061AA35 /* RSNetflixEngine-Prefix.pch */ = {isa = PBXFileReference; path = "RSNetflixEngine-Prefix.pch"; sourceTree = "<group>"; };
+		6595FC931393364E0061AA35 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6595FC951393364E0061AA35 /* RSNetflixEngineAppDelegate.h */ = {isa = PBXFileReference; path = RSNetflixEngineAppDelegate.h; sourceTree = "<group>"; };
+		6595FC961393364E0061AA35 /* RSNetflixEngineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSNetflixEngineAppDelegate.m; sourceTree = "<group>"; };
+		6595FC991393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		6595FC9B1393364E0061AA35 /* RootViewController.h */ = {isa = PBXFileReference; path = RootViewController.h; sourceTree = "<group>"; };
+		6595FC9C1393364E0061AA35 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		6595FC9F1393364E0061AA35 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6595FC7F1393364D0061AA35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6595FC871393364D0061AA35 /* UIKit.framework in Frameworks */,
+				6595FC891393364E0061AA35 /* Foundation.framework in Frameworks */,
+				6595FC8B1393364E0061AA35 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6595FC771393364D0061AA35 = {
+			isa = PBXGroup;
+			children = (
+				6595FC8C1393364E0061AA35 /* RSNetflixEngine */,
+				6595FC851393364D0061AA35 /* Frameworks */,
+				6595FC831393364D0061AA35 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6595FC831393364D0061AA35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6595FC821393364D0061AA35 /* RSNetflixEngine.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6595FC851393364D0061AA35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6595FC861393364D0061AA35 /* UIKit.framework */,
+				6595FC881393364D0061AA35 /* Foundation.framework */,
+				6595FC8A1393364E0061AA35 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6595FC8C1393364E0061AA35 /* RSNetflixEngine */ = {
+			isa = PBXGroup;
+			children = (
+				6595FC951393364E0061AA35 /* RSNetflixEngineAppDelegate.h */,
+				6595FC961393364E0061AA35 /* RSNetflixEngineAppDelegate.m */,
+				6595FC981393364E0061AA35 /* MainWindow.xib */,
+				6595FC9B1393364E0061AA35 /* RootViewController.h */,
+				6595FC9C1393364E0061AA35 /* RootViewController.m */,
+				6595FC9E1393364E0061AA35 /* RootViewController.xib */,
+				6595FC8D1393364E0061AA35 /* Supporting Files */,
+			);
+			path = RSNetflixEngine;
+			sourceTree = "<group>";
+		};
+		6595FC8D1393364E0061AA35 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6595FC8E1393364E0061AA35 /* RSNetflixEngine-Info.plist */,
+				6595FC8F1393364E0061AA35 /* InfoPlist.strings */,
+				6595FC921393364E0061AA35 /* RSNetflixEngine-Prefix.pch */,
+				6595FC931393364E0061AA35 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6595FC811393364D0061AA35 /* RSNetflixEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6595FCA31393364E0061AA35 /* Build configuration list for PBXNativeTarget "RSNetflixEngine" */;
+			buildPhases = (
+				6595FC7E1393364D0061AA35 /* Sources */,
+				6595FC7F1393364D0061AA35 /* Frameworks */,
+				6595FC801393364D0061AA35 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RSNetflixEngine;
+			productName = RSNetflixEngine;
+			productReference = 6595FC821393364D0061AA35 /* RSNetflixEngine.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6595FC791393364D0061AA35 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 6595FC7C1393364D0061AA35 /* Build configuration list for PBXProject "RSNetflixEngine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6595FC771393364D0061AA35;
+			productRefGroup = 6595FC831393364D0061AA35 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6595FC811393364D0061AA35 /* RSNetflixEngine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6595FC801393364D0061AA35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6595FC911393364E0061AA35 /* InfoPlist.strings in Resources */,
+				6595FC9A1393364E0061AA35 /* MainWindow.xib in Resources */,
+				6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6595FC7E1393364D0061AA35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6595FC941393364E0061AA35 /* main.m in Sources */,
+				6595FC971393364E0061AA35 /* RSNetflixEngineAppDelegate.m in Sources */,
+				6595FC9D1393364E0061AA35 /* RootViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6595FC8F1393364E0061AA35 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6595FC901393364E0061AA35 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		6595FC981393364E0061AA35 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6595FC991393364E0061AA35 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		6595FC9E1393364E0061AA35 /* RootViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6595FC9F1393364E0061AA35 /* en */,
+			);
+			name = RootViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6595FCA11393364E0061AA35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6595FCA21393364E0061AA35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		6595FCA41393364E0061AA35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSNetflixEngine/RSNetflixEngine-Prefix.pch";
+				INFOPLIST_FILE = "RSNetflixEngine/RSNetflixEngine-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6595FCA51393364E0061AA35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RSNetflixEngine/RSNetflixEngine-Prefix.pch";
+				INFOPLIST_FILE = "RSNetflixEngine/RSNetflixEngine-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6595FC7C1393364D0061AA35 /* Build configuration list for PBXProject "RSNetflixEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6595FCA11393364E0061AA35 /* Debug */,
+				6595FCA21393364E0061AA35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6595FCA31393364E0061AA35 /* Build configuration list for PBXNativeTarget "RSNetflixEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6595FCA41393364E0061AA35 /* Debug */,
+				6595FCA51393364E0061AA35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6595FC791393364D0061AA35 /* Project object */;
+}
