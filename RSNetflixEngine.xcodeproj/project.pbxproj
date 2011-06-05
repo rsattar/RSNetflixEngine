@@ -18,7 +18,7 @@
 		6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6595FC9E1393364E0061AA35 /* RootViewController.xib */; };
 		6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCA8139338FA0061AA35 /* RSNetflixEngine.m */; };
 		6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCAB13934D1E0061AA35 /* RSURLLoader.m */; };
-		6595FCB1139364BA0061AA35 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCB0139364BA0061AA35 /* Base64Transcoder.c */; };
+		65CDF044139C223C008F4C9E /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CDF042139C223C008F4C9E /* Base64Transcoder.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +41,8 @@
 		6595FCAA13934D1E0061AA35 /* RSURLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLLoader.h; sourceTree = "<group>"; };
 		6595FCAB13934D1E0061AA35 /* RSURLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSURLLoader.m; sourceTree = "<group>"; };
 		6595FCAD139362630061AA35 /* RSCryptoUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCryptoUtilities.h; sourceTree = "<group>"; };
-		6595FCAF1393649C0061AA35 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
-		6595FCB0139364BA0061AA35 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
+		65CDF042139C223C008F4C9E /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Base64Transcoder.c; path = Crypto/Base64Transcoder.c; sourceTree = "<group>"; };
+		65CDF043139C223C008F4C9E /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base64Transcoder.h; path = Crypto/Base64Transcoder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +128,8 @@
 		6595FCAE139364740061AA35 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				6595FCAF1393649C0061AA35 /* Base64Transcoder.h */,
-				6595FCB0139364BA0061AA35 /* Base64Transcoder.c */,
+				65CDF042139C223C008F4C9E /* Base64Transcoder.c */,
+				65CDF043139C223C008F4C9E /* Base64Transcoder.h */,
 			);
 			name = Crypto;
 			sourceTree = "<group>";
@@ -199,7 +199,7 @@
 				6595FC9D1393364E0061AA35 /* RootViewController.m in Sources */,
 				6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */,
 				6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */,
-				6595FCB1139364BA0061AA35 /* Base64Transcoder.c in Sources */,
+				65CDF044139C223C008F4C9E /* Base64Transcoder.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +312,7 @@
 				6595FCA51393364E0061AA35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
