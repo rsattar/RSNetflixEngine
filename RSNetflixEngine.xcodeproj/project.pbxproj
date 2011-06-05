@@ -19,6 +19,8 @@
 		6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCA8139338FA0061AA35 /* RSNetflixEngine.m */; };
 		6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6595FCAB13934D1E0061AA35 /* RSURLLoader.m */; };
 		65CDF044139C223C008F4C9E /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CDF042139C223C008F4C9E /* Base64Transcoder.c */; };
+		65CDF047139C2921008F4C9E /* RSNetflixAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CDF046139C2921008F4C9E /* RSNetflixAPIRequest.m */; };
+		65CDF04A139C29E5008F4C9E /* RSNetflixAPIContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CDF049139C29E5008F4C9E /* RSNetflixAPIContext.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,10 @@
 		6595FCAD139362630061AA35 /* RSCryptoUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCryptoUtilities.h; sourceTree = "<group>"; };
 		65CDF042139C223C008F4C9E /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Base64Transcoder.c; path = Crypto/Base64Transcoder.c; sourceTree = "<group>"; };
 		65CDF043139C223C008F4C9E /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base64Transcoder.h; path = Crypto/Base64Transcoder.h; sourceTree = "<group>"; };
+		65CDF045139C2921008F4C9E /* RSNetflixAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSNetflixAPIRequest.h; path = Source/RSNetflixAPIRequest.h; sourceTree = "<group>"; };
+		65CDF046139C2921008F4C9E /* RSNetflixAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSNetflixAPIRequest.m; path = Source/RSNetflixAPIRequest.m; sourceTree = "<group>"; };
+		65CDF048139C29E5008F4C9E /* RSNetflixAPIContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSNetflixAPIContext.h; path = Source/RSNetflixAPIContext.h; sourceTree = "<group>"; };
+		65CDF049139C29E5008F4C9E /* RSNetflixAPIContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSNetflixAPIContext.m; path = Source/RSNetflixAPIContext.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,10 @@
 				6595FCAA13934D1E0061AA35 /* RSURLLoader.h */,
 				6595FCAB13934D1E0061AA35 /* RSURLLoader.m */,
 				6595FCAD139362630061AA35 /* RSCryptoUtilities.h */,
+				65CDF045139C2921008F4C9E /* RSNetflixAPIRequest.h */,
+				65CDF046139C2921008F4C9E /* RSNetflixAPIRequest.m */,
+				65CDF048139C29E5008F4C9E /* RSNetflixAPIContext.h */,
+				65CDF049139C29E5008F4C9E /* RSNetflixAPIContext.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -200,6 +210,8 @@
 				6595FCA9139338FA0061AA35 /* RSNetflixEngine.m in Sources */,
 				6595FCAC13934D1E0061AA35 /* RSURLLoader.m in Sources */,
 				65CDF044139C223C008F4C9E /* Base64Transcoder.c in Sources */,
+				65CDF047139C2921008F4C9E /* RSNetflixAPIRequest.m in Sources */,
+				65CDF04A139C29E5008F4C9E /* RSNetflixAPIContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,14 +23,19 @@
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
-    
-    
+    /*
     // Initialize RSNetflixEngine
     netflix = [[RSNetflixEngine alloc] initWithConsumerKey:@"rwbq7xmey8xhtv8tszrgk2gp" sharedSecret:@"xQ57dwQFtK" applicationName:@"Movies on Netflix"];
     // Make a test call
     //[netflix callAPIMethod:@"catalog/titles/autocomplete" arguments:[NSDictionary dictionaryWithObjectsAndKeys:[netflix consumerKey],@"oauth_consumer_key",@"frances%20mc",@"term", nil] isSigned:NO];
     
     [netflix callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
+    */
+    netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:@"rwbq7xmey8xhtv8tszrgk2gp" sharedSecret:@"xQ57dwQFtK" applicationName:@"Movies on Netflix"];
+    
+    RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
+    [request callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
+    
     return YES;
 }
 
