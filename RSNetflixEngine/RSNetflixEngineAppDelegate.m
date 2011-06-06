@@ -7,6 +7,7 @@
 //
 
 #import "RSNetflixEngineAppDelegate.h"
+#import "APIKeys.h"
 
 @implementation RSNetflixEngineAppDelegate
 
@@ -31,7 +32,7 @@
     
     [netflix callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     */
-    netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:@"rwbq7xmey8xhtv8tszrgk2gp" sharedSecret:@"xQ57dwQFtK" applicationName:@"Movies on Netflix"];
+    netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
     
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     [request callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];

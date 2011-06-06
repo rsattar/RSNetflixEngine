@@ -1,0 +1,12 @@
+//
+//  APIKeys.h
+//  RSNetflixEngine
+//
+//  Created by Rizwan on 6/5/11.
+//  Copyright 2011 Rizwan Sattar. All rights reserved.
+//
+
+#error Copy this file as APIKeys.h, and fill in your developer credentials, or get them from http://developer.netflix.com/member/register
+#define RS_NETFLIX_ENGINE_API_KEY           @""
+#define RS_NETFLIX_ENGINE_SHARED_SECRET     @""
+#define RS_NETFLIX_ENGINE_APPLICATION_NAME  @""

@@ -49,6 +49,7 @@
 		65CDF046139C2921008F4C9E /* RSNetflixAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSNetflixAPIRequest.m; path = Source/RSNetflixAPIRequest.m; sourceTree = "<group>"; };
 		65CDF048139C29E5008F4C9E /* RSNetflixAPIContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSNetflixAPIContext.h; path = Source/RSNetflixAPIContext.h; sourceTree = "<group>"; };
 		65CDF049139C29E5008F4C9E /* RSNetflixAPIContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSNetflixAPIContext.m; path = Source/RSNetflixAPIContext.m; sourceTree = "<group>"; };
+		65CDF05B139C3ACF008F4C9E /* APIKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIKeys.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 		6595FC771393364D0061AA35 = {
 			isa = PBXGroup;
 			children = (
+				65CDF05B139C3ACF008F4C9E /* APIKeys.h */,
 				6595FCAE139364740061AA35 /* Crypto */,
 				6595FCA6139338C10061AA35 /* Source */,
 				6595FC8C1393364E0061AA35 /* RSNetflixEngine */,
