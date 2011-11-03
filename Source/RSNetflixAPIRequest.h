@@ -32,8 +32,9 @@
     id<RSNetflixAPIRequestDelegate> delegate;
 }
 
-- (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
+@property(assign) id<RSNetflixAPIRequestDelegate> delegate;
 
+- (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 - (void)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned;
 
 @end

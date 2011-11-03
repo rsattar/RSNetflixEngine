@@ -11,6 +11,8 @@
 
 @implementation RSNetflixAPIRequest
 
+@synthesize delegate;
+
 - (void)dealloc
 {
     [apiContext release];
@@ -62,6 +64,13 @@
     [urlLoader start];
 }
 
+- (void)notifyDelegateOfError:(NSError *)error
+{
+    if([delegate respondsToSelector:@selector(netflixAPIRequest:didFailWithError:)]) {
+        [delegate netflixAPIRequest:self didFailWithError:error];
+    }
+}
+
 #pragma mark -
 #pragma mark RSURLLoader delegate methods
 
@@ -75,11 +84,29 @@
     }
     NSLog(@"\nStatus Code: %d\n%@",statusCode,rawString);
     [rawString release];
-    // TODO: Notify delegate of success
+     
+    //NSMutableDictionary *responseDictionary = [NSMutableDictionary dictionary];
+    NSError* error = nil;
+    NSDictionary* responseDictionary = [NSJSONSerialization 
+                                        JSONObjectWithData:data //1
+                                        options:kNilOptions 
+                                        error:&error];
+    if(error == nil) {
+        
+        // Notify delegate of success
+        if([delegate respondsToSelector:@selector(netflixAPIRequest:didCompleteWithResponse:)]) {
+            [delegate netflixAPIRequest:self didCompleteWithResponse:responseDictionary];
+        }
+    } else {
+        [self notifyDelegateOfError:error];
+    }
+    
 }
+
 - (void)loader:(RSURLLoader *)loader didFailWithError:(NSError*)error
 {
-    // TODO: Notify delegate of failure
+    // Notify delegate of failure
+    [self notifyDelegateOfError:error];
 }
 
 @end
