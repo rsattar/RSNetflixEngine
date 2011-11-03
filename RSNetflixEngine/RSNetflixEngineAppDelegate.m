@@ -35,6 +35,7 @@
     netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
     
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
+    request.delegate = self;
     [request callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     
     return YES;
@@ -85,6 +86,19 @@
     [_navigationController release];
     [netflix release];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark API Request delegate
+
+- (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary
+{
+    NSLog(@"NetflixAPIRequestDelegate didCompleteWithResponse: \n%@", inResponseDictionary);
+}
+
+- (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didFailWithError:(NSError *)inError
+{
+    NSLog(@"NetflixAPIRequestDelegate didFailWithError");
 }
 
 @end
