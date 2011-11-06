@@ -10,7 +10,7 @@
 #import "RSNetflixAPIContext.h"
 #import "RSNetflixAPIRequest.h"
 
-@interface RSNetflixEngine : NSObject {
+@interface RSNetflixEngine : NSObject <RSNetflixAPIRequestDelegate> {
     
     RSNetflixAPIContext *apiContext;
     
@@ -28,6 +28,8 @@
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 
+- (void)searchForTitlesMatchingTerm:(NSString*)term;
+- (void)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
 
 
 // Declaring REST method names as constants
