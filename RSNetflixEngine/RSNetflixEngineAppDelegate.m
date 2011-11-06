@@ -36,7 +36,7 @@
     
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     request.delegate = self;
-    [request callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
+    [request callAPIMethod:RSNetflixMethodSearchPeople arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     
     return YES;
 }
