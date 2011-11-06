@@ -77,6 +77,7 @@
 
 - (void)loader:(RSURLLoader *)loader didFinishWithStatusCode:(NSInteger)statusCode data:(NSData *)data
 {
+    /*
     NSString *rawString = @"";
     if([data length] > 0) {
         // Pull the data out
@@ -84,7 +85,7 @@
     }
     NSLog(@"\nStatus Code: %d\n%@",statusCode,rawString);
     [rawString release];
-     
+    */
     //NSMutableDictionary *responseDictionary = [NSMutableDictionary dictionary];
     NSError* error = nil;
     NSDictionary* responseDictionary = [NSJSONSerialization 
