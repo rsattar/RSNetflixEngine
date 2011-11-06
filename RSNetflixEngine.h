@@ -16,7 +16,15 @@
     
     // Potentially for pooling our active connections
     NSMutableArray *activeURLConnections;
+    
+    // This is our default delegate which all requests call back to
+    // In our implementation, we'll "proxy" the delegate callback
+    // so that we can track the response ourselves first
+    
+    id<RSNetflixAPIRequestDelegate> delegate;
 }
+
+@property(assign) id<RSNetflixAPIRequestDelegate> delegate;
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 

@@ -9,6 +9,9 @@
 #import "RSNetflixEngine.h"
 
 @implementation RSNetflixEngine
+
+@synthesize delegate;
+
 - (void)dealloc
 {
     [apiContext release];
