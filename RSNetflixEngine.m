@@ -12,6 +12,10 @@
 
 @interface RSNetflixEngine (PrivateMethods)
 
+// Marking requests as active
+- (void) addRequest:(RSNetflixAPIRequest *)request;
+- (void) removeRequest:(RSNetflixAPIRequest *)request;
+
 // Delegate methods
 - (BOOL) isValidDelegateForSelector:(SEL)selector;
 
@@ -70,7 +74,7 @@
                                nil];
     [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES];
     
-    [activeURLConnections addObject:request];
+    [self addRequest:request];
 }
 
 
@@ -80,9 +84,7 @@
 
 - (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary
 {
-    if([activeURLConnections containsObject:inRequest]) {
-        [activeURLConnections removeObject:inRequest];
-    }
+    [self removeRequest:inRequest];
     
     if ([self isValidDelegateForSelector:@selector(netflixAPIRequest:didCompleteWithResponse:)])
         [delegate netflixAPIRequest:inRequest didCompleteWithResponse:inResponseDictionary];
@@ -90,12 +92,24 @@
 
 - (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didFailWithError:(NSError *)inError
 {
-    if([activeURLConnections containsObject:inRequest]) {
-        [activeURLConnections removeObject:inRequest];
-    }
+    [self removeRequest:inRequest];
     
     if ([self isValidDelegateForSelector:@selector(netflixAPIRequest:didFailWithError:)])
         [delegate netflixAPIRequest:inRequest didFailWithError:inError];
+}
+
+#pragma mark Request Management
+// Marking requests as active
+- (void) addRequest:(RSNetflixAPIRequest *)request
+{
+    [activeURLConnections addObject:request];
+}
+
+- (void) removeRequest:(RSNetflixAPIRequest *)request
+{
+    if([activeURLConnections containsObject:request]) {
+        [activeURLConnections removeObject:request];
+    }
 }
 
 #pragma mark Delegate methods
