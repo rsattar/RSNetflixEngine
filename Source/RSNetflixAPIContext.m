@@ -22,6 +22,12 @@
 
 @implementation RSNetflixAPIContext
 
+@synthesize consumerKey;
+@synthesize sharedSecret;
+@synthesize applicationName;
+@synthesize RESTAPIEndPoint;
+@synthesize oAuthRequestToken;
+@synthesize oAuthRequestTokenSecret;
 
 - (void)dealloc
 {
@@ -29,6 +35,8 @@
     [sharedSecret release];
     [applicationName release];
     [RESTAPIEndpoint release];
+    [oAuthRequestToken release];
+    [oAuthRequestTokenSecret release];
     
     [super dealloc];
 }
@@ -46,6 +54,7 @@
     return self;
 }
 
+/*
 #pragma mark -
 #pragma Property getters and setters
 
@@ -96,7 +105,7 @@
 {
     return RESTAPIEndpoint;
 }
-
+*/
 #pragma mark -
 #pragma Query Building and Signing
 
