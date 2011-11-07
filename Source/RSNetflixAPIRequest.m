@@ -9,13 +9,23 @@
 #import "RSNetflixAPIRequest.h"
 
 
+@interface RSNetflixAPIRequest (PrivateMethods)
+
+// idea taken from Matt Gemmell: https://github.com/mattgemmell/MGTwitterEngine
+// Though I didn't want to create a whole category on NSString
++ (NSString*)stringWithNewUUID;
+
+@end
+
 @implementation RSNetflixAPIRequest
 
 @synthesize delegate;
+@synthesize identifier;
 
 - (void)dealloc
 {
     [apiContext release];
+    [identifier release];
     
     [super dealloc];
 }
@@ -25,11 +35,12 @@
     if ((self = [super init])) {
         apiContext = [inAPIContext retain];
         urlLoader = nil;
+        identifier = nil;
     }
     return self;
 }
 
-- (void)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned 
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned 
 {
     
     // combine the parameters 
@@ -62,6 +73,13 @@
     [urlLoader release];
     urlLoader = [[RSURLLoader alloc] initWithURL:urlString delegate:self];
     [urlLoader start];
+    
+    NSString *tmpIdentifier = identifier;
+    identifier = [[RSNetflixAPIRequest stringWithNewUUID] retain];
+    [tmpIdentifier release];
+    tmpIdentifier = nil;
+    
+    return identifier;
 }
 
 - (void)notifyDelegateOfError:(NSError *)error
@@ -108,6 +126,20 @@
 {
     // Notify delegate of failure
     [self notifyDelegateOfError:error];
+}
+
+#pragma mark -
+#pragma mark PrivateMethods implementation
+
++ (NSString*)stringWithNewUUID
+{
+    // Create a new UUID
+    CFUUIDRef uuidObj = CFUUIDCreate(nil);
+    
+    // Get the string representation of the UUID
+    NSString *newUUID = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    CFRelease(uuidObj);
+    return [newUUID autorelease];
 }
 
 @end

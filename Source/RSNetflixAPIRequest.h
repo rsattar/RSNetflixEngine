@@ -29,12 +29,15 @@
     RSURLLoader *urlLoader;
     RSNetflixAPIContext *apiContext;
     
+    NSString *identifier;
+    
     id<RSNetflixAPIRequestDelegate> delegate;
 }
 
 @property(assign) id<RSNetflixAPIRequestDelegate> delegate;
+@property(readonly) NSString *identifier;
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
-- (void)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned;
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned;
 
 @end
