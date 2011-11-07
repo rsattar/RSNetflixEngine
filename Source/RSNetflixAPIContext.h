@@ -15,7 +15,7 @@
     NSString *sharedSecret;
     NSString *applicationName;
     
-    NSString *RESTAPIEndpoint;
+    NSString *RESTAPIEndPoint;
     
     NSString *oAuthRequestToken;
     NSString *oAuthRequestTokenSecret;

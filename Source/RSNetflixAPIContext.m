@@ -34,7 +34,7 @@
     [consumerKey release];
     [sharedSecret release];
     [applicationName release];
-    [RESTAPIEndpoint release];
+    [RESTAPIEndPoint release];
     [oAuthRequestToken release];
     [oAuthRequestTokenSecret release];
     
@@ -49,7 +49,7 @@
         sharedSecret = [inSharedSecret copy];
         applicationName = [inApplicationName copy];
         
-        RESTAPIEndpoint = kDefaultNetflixRESTAPIEndpoint;
+        RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
     }
     return self;
 }
@@ -132,7 +132,7 @@ NSString *oAuthEscape(NSString *string)
 
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod
 {
-    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndpoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret httpMethod:httpMethod];
+    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndPoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret httpMethod:httpMethod];
 }
 
 - (NSString *)queryFromArguments:(NSDictionary *)arguments

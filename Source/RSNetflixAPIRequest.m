@@ -57,7 +57,7 @@
     } else {
         query = [apiContext queryFromArguments:newArgs];
     }
-    NSString *urlString = [NSString stringWithFormat:@"%@%@?%@", [apiContext RESTAPIEndpoint], methodName, query];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@?%@", apiContext.RESTAPIEndPoint, methodName, query];
     NSLog(@"URL Request: %@",urlString);
     [urlLoader release];
     urlLoader = [[RSURLLoader alloc] initWithURL:urlString delegate:self];
