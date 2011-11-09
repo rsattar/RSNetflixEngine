@@ -40,10 +40,25 @@
     request.delegate = self;
     [request callAPIMethod:RSNetflixMethodSearchPeople arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     */
-    RSNetflixEngine *netflixEngine = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
-    netflixEngine.delegate = self;
-    [netflixEngine searchForTitlesMatchingTerm:@"Star"];
     
+    /*
+    netflix = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
+    netflix.delegate = self;
+    //[netflixEngine searchForTitlesMatchingTerm:@"Star"];
+    oAuthRequestId = [[netflix requestOAuthToken] retain];
+    */
+    
+    // Testing blocks out with API Requests
+    RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
+    [request callAPIMethod:RSNetflixMethodSearchPeople 
+                 arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] 
+                  isSigned:YES
+          withSuccessBlock:^(NSDictionary *response) {
+              NSLog(@"Got response back as block! %@",response);
+          } 
+                errorBlock:^(NSError *error) {
+                    NSLog(@"Got error back as block! %@", error);
+                }];
     return YES;
 }
 
