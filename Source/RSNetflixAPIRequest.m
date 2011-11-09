@@ -11,6 +11,7 @@
 
 @interface RSNetflixAPIRequest (PrivateMethods)
 
+- (void)destroyBlocks;
 // idea taken from Matt Gemmell: https://github.com/mattgemmell/MGTwitterEngine
 // Though I didn't want to create a whole category on NSString
 + (NSString*)stringWithNewUUID;
@@ -24,10 +25,19 @@
 
 - (void)dealloc
 {
+    [self destroyBlocks];
     [apiContext release];
     [identifier release];
-    
+    delegate = nil;
     [super dealloc];
+}
+
+- (void)destroyBlocks
+{
+    [successBlock release];
+    successBlock = nil;
+    [errorBlock release];
+    errorBlock = nil;
 }
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext
@@ -82,11 +92,27 @@
     return identifier;
 }
 
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned withSuccessBlock:(void (^)(NSDictionary *response))inSuccessBlock errorBlock:(void (^)(NSError *error))inErrorBlock
+{
+    // Save our successBlock and errorBlock for calling back later
+    [successBlock release];
+    successBlock = [inSuccessBlock copy];
+    [errorBlock release];
+    errorBlock = [inErrorBlock copy];
+    // now call as usual
+    return [self callAPIMethod:methodName arguments:arguments isSigned:isSigned];
+}
+
 - (void)notifyDelegateOfError:(NSError *)error
 {
     if([delegate respondsToSelector:@selector(netflixAPIRequest:didFailWithError:)]) {
         [delegate netflixAPIRequest:self didFailWithError:error];
     }
+    // Notify via blocks, if we 'ave one
+    if(errorBlock) {
+        errorBlock(error);
+    }
+    [self destroyBlocks];
 }
 
 #pragma mark -
@@ -116,6 +142,11 @@
         if([delegate respondsToSelector:@selector(netflixAPIRequest:didCompleteWithResponse:)]) {
             [delegate netflixAPIRequest:self didCompleteWithResponse:responseDictionary];
         }
+        // Notify via blocks, if we 'ave one
+        if(successBlock) {
+            successBlock(responseDictionary);
+        }
+        [self destroyBlocks];
     } else {
         [self notifyDelegateOfError:error];
     }

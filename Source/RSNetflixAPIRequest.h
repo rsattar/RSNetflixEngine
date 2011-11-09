@@ -23,6 +23,10 @@
 
 @end
 
+// Declare the block types so it's easy to refer to them as variables
+typedef void (^RSNetflixAPIRequestSuccessBlock)(NSDictionary *);
+typedef void (^RSNetflixAPIRequestErrorBlock)(NSError *);
+
 // Actual class declaration
 
 @interface RSNetflixAPIRequest : NSObject <RSURLLoaderDelegate> {
@@ -32,6 +36,9 @@
     NSString *identifier;
     
     id<RSNetflixAPIRequestDelegate> delegate;
+    
+    RSNetflixAPIRequestSuccessBlock successBlock;
+    RSNetflixAPIRequestErrorBlock errorBlock;
 }
 
 @property(assign) id<RSNetflixAPIRequestDelegate> delegate;
@@ -39,5 +46,5 @@
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 - (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned;
-
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)successBlock errorBlock:(RSNetflixAPIRequestErrorBlock)errorBlock;
 @end
