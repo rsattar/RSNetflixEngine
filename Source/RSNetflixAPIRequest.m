@@ -9,6 +9,10 @@
 #import "RSNetflixAPIRequest.h"
 
 
+
+// Useful for retaining active requests
+static NSMutableArray *activeRequests = nil;
+
 @interface RSNetflixAPIRequest (PrivateMethods)
 
 - (void)destroyBlocks;
@@ -22,6 +26,10 @@
 
 @synthesize delegate;
 @synthesize identifier;
+
++(void) initialize {
+    activeRequests = [[NSMutableArray array] retain];
+}
 
 - (void)dealloc
 {
@@ -89,6 +97,9 @@
     [tmpIdentifier release];
     tmpIdentifier = nil;
     
+    // keep our retain count while we make the request
+    [activeRequests addObject:self];
+    
     return identifier;
 }
 
@@ -151,12 +162,18 @@
         [self notifyDelegateOfError:error];
     }
     
+    // now we are safe to be destroyed
+    [activeRequests removeObject:self];
+    
 }
 
 - (void)loader:(RSURLLoader *)loader didFailWithError:(NSError*)error
 {
     // Notify delegate of failure
     [self notifyDelegateOfError:error];
+    
+    // now we are safe to be destroyed
+    [activeRequests removeObject:self];
 }
 
 #pragma mark -
