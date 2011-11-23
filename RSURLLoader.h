@@ -10,7 +10,7 @@
 
 @protocol RSURLLoaderDelegate;
 /**
- * This class encapsulates an NSURLConnection and manages it's lifetime, collecting response data
+ * This class encapsulates an NSURLConnection and manages its lifetime, collecting response data
  * and firing appropriate delegate callbacks
  */
 @interface RSURLLoader : NSObject {
