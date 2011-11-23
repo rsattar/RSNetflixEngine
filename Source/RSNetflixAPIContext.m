@@ -111,10 +111,10 @@ NSString *oAuthEscape(NSString *string)
     
     if(oAuthLoginUrlFragment && userLoginCallbackUrl) {
         NSMutableDictionary *paramsDictionary = [NSMutableDictionary dictionary];
-        // Add our existing params here
+        // Add our existing params here (make sure we insert everything in params dictionary already url encoded)
         [paramsDictionary setObject:[self urlEncodedStringFromString:applicationName] forKey:@"application_name"];
-        [paramsDictionary setObject:consumerKey forKey:@"oauth_consumer_key"];
-        [paramsDictionary setObject:oAuthRequestToken forKey:@"oauth_token"];
+        [paramsDictionary setObject:[self urlEncodedStringFromString:consumerKey] forKey:@"oauth_consumer_key"];
+        [paramsDictionary setObject:[self urlEncodedStringFromString:oAuthRequestToken] forKey:@"oauth_token"];
         [paramsDictionary setObject:[self urlEncodedStringFromString:userLoginCallbackUrl] forKey:@"oauth_callback"];
         
         NSString *existingParamString = oAuthLoginUrlFragment.query;
@@ -123,7 +123,8 @@ NSString *oAuthEscape(NSString *string)
             NSArray *pairs = [existingParamString componentsSeparatedByString:@"&"];
             for (NSInteger i = 0; i < pairs.count; i++) {
                 NSArray *split = [[pairs objectAtIndex:i] componentsSeparatedByString:@"="];
-                [paramsDictionary setObject:[self urlEncodedStringFromString:[split objectAtIndex:1]] forKey:[split objectAtIndex:0]];
+                // These objects are already url encoded, so just set them into the dictionary
+                [paramsDictionary setObject:[split objectAtIndex:1] forKey:[split objectAtIndex:0]];
             }
         }
         
@@ -137,7 +138,8 @@ NSString *oAuthEscape(NSString *string)
             } else {
                 [parametersString appendString:@"?"];
             }
-            [parametersString appendFormat: @"%@=%@", [self urlEncodedStringFromString:key], [self urlEncodedStringFromString:value]];
+            // key and value are already url encoded, so just concatenate
+            [parametersString appendFormat: @"%@=%@", key, value];
             parameterAdded = YES;
         }
         
