@@ -26,6 +26,7 @@
 @synthesize sharedSecret;
 @synthesize applicationName;
 @synthesize RESTAPIEndPoint;
+@synthesize userLoginCallbackUrl;
 @synthesize oAuthRequestToken;
 @synthesize oAuthRequestTokenSecret;
 @synthesize oAuthLoginUrlFragment;
@@ -36,6 +37,7 @@
     [sharedSecret release];
     [applicationName release];
     [RESTAPIEndPoint release];
+    [userLoginCallbackUrl release];
     [oAuthRequestToken release];
     [oAuthRequestTokenSecret release];
     
@@ -50,63 +52,12 @@
         sharedSecret = [inSharedSecret copy];
         applicationName = [inApplicationName copy];
         
-        RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
+        self.RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
+        self.userLoginCallbackUrl = @"";
     }
     return self;
 }
 
-/*
-#pragma mark -
-#pragma Property getters and setters
-
-- (void)setConsumerKey:(NSString *)inConsumerKey
-{
-    NSString *tmp = consumerKey;
-    consumerKey = [inConsumerKey copy];
-    [tmp release];
-}
-
-- (NSString *)consumerKey
-{
-    return consumerKey;
-}
-
-- (void)setSharedSecret:(NSString *)inSharedSecret
-{
-    NSString *tmp = sharedSecret;
-    sharedSecret = [inSharedSecret copy];
-    [tmp release];
-}
-
-- (NSString *)sharedSecret
-{
-    return sharedSecret;
-}
-
-- (void)setApplicationName:(NSString *)inApplicationName
-{
-    NSString *tmp = applicationName;
-    applicationName = [inApplicationName copy];
-    [tmp release];
-}
-
-- (NSString *)applicationName
-{
-    return applicationName;
-}
-
-- (void)setRESTAPIEndpoint:(NSString *)inRESTAPIEndpoint
-{
-    NSString *tmp = RESTAPIEndpoint;
-    RESTAPIEndpoint = [inRESTAPIEndpoint copy];
-    [tmp release];
-}
-
-- (NSString *)RESTAPIEndpoint
-{
-    return RESTAPIEndpoint;
-}
-*/
 #pragma mark -
 #pragma Query Building and Signing
 
@@ -154,17 +105,17 @@ NSString *oAuthEscape(NSString *string)
 }
 
 
-- (NSString *)loginUrlStringWithCallbackUrlString:(NSString *)callbackUrlString
+- (NSString *)constructUserLoginUrlString
 {
     NSMutableString *loginUrl = [NSMutableString stringWithString:@""];
     
-    if(oAuthLoginUrlFragment && callbackUrlString) {
+    if(oAuthLoginUrlFragment && userLoginCallbackUrl) {
         NSMutableDictionary *paramsDictionary = [NSMutableDictionary dictionary];
         // Add our existing params here
         [paramsDictionary setObject:[self urlEncodedStringFromString:applicationName] forKey:@"application_name"];
         [paramsDictionary setObject:consumerKey forKey:@"oauth_consumer_key"];
         [paramsDictionary setObject:oAuthRequestToken forKey:@"oauth_token"];
-        [paramsDictionary setObject:[self urlEncodedStringFromString:callbackUrlString] forKey:@"oauth_callback"];
+        [paramsDictionary setObject:[self urlEncodedStringFromString:userLoginCallbackUrl] forKey:@"oauth_callback"];
         
         NSString *existingParamString = oAuthLoginUrlFragment.query;
         if([existingParamString length] > 0) {

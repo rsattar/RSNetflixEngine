@@ -29,6 +29,7 @@
 @property(copy) NSString *sharedSecret;
 @property(copy) NSString *applicationName;
 @property(copy) NSString *RESTAPIEndPoint;
+@property(copy) NSString *userLoginCallbackUrl;
 // These should be set after receiving a proper response from oauth/request_token
 @property(copy) NSString *oAuthRequestToken;
 @property(copy) NSString *oAuthRequestTokenSecret;
@@ -47,5 +48,5 @@
 */
 - (NSString *)queryFromArguments:(NSDictionary *)arguments;
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod;
-- (NSString *)loginUrlStringWithCallbackUrlString:(NSString *)callbackUrlString;
+- (NSString *)constructUserLoginUrlString;
 @end
