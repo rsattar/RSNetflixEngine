@@ -9,6 +9,7 @@
 #import "RSUserLoginViewController.h"
 
 @implementation RSUserLoginViewController
+@synthesize delegate;
 @synthesize webView;
 @synthesize loginUrl;
 @synthesize callBackUrl;
@@ -61,8 +62,35 @@
     [webView release];
     [super dealloc];
 }
+
+// Inspired (lifted) by https://github.com/mattgemmell/MGTwitterEngine
+- (BOOL) delegateSupportsSelector:(SEL)selector
+{
+	return ((delegate != nil) && [delegate respondsToSelector:selector]);
+}
+
 - (IBAction)cancelButtonTapped:(id)sender {
-    [self.presentingViewController dismissModalViewControllerAnimated:YES];
+    
+    if([self delegateSupportsSelector:@selector(userLoginViewControllerCancelled:)]) {
+        [delegate userLoginViewControllerCancelled:self];
+    }
+}
+
+- (NSDictionary *)getQueryDictionaryFromURL:(NSURL *)url {
+    NSMutableDictionary *paramsDictionary = [NSMutableDictionary dictionary];
+    if(url) {
+        NSString *existingParamString = url.query;
+        if([existingParamString length] > 0) {
+            // Separate into & bits first
+            NSArray *pairs = [existingParamString componentsSeparatedByString:@"&"];
+            for (NSInteger i = 0; i < pairs.count; i++) {
+                NSArray *split = [[pairs objectAtIndex:i] componentsSeparatedByString:@"="];
+                // These objects are already url encoded, so just set them into the dictionary
+                [paramsDictionary setObject:[split objectAtIndex:1] forKey:[split objectAtIndex:0]];
+            }
+        }
+    }
+    return paramsDictionary;
 }
 
 #pragma - WebView Delegate
@@ -75,9 +103,11 @@
         
         // https://api-user.netflix.com/oauth/foo%3A%2F%2Fbar?oauth_token=sq3mnwaqx6t3bawdb85f23yq&oauth_verifier=
 
-        
-        
-        
+        // foo://bar?oauth_token=t8vc52qy8q8j4mc448g3stj5&oauth_verifier=
+        NSDictionary *loginSuccessReponse = [self getQueryDictionaryFromURL:request.URL];
+        if([self delegateSupportsSelector:@selector(userLoginViewControllerSucceeded:withResponse:)]) {
+            [delegate userLoginViewControllerSucceeded:self withResponse:loginSuccessReponse];
+        }
         
         return NO;
     } else {

@@ -8,7 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSUserLoginViewController : UIViewController <UIWebViewDelegate>
+@class RSUserLoginViewController;
+
+@protocol RSUserLoginViewControllerDelegate <NSObject>
+
+- (void)userLoginViewControllerSucceeded:(RSUserLoginViewController *)viewController withResponse:(NSDictionary *)loginResponse;
+- (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController;
+
+@end
+
+@interface RSUserLoginViewController : UIViewController <UIWebViewDelegate> {
+
+    id<RSUserLoginViewControllerDelegate> delegate;
+    
+}
+
+@property(assign) id<RSUserLoginViewControllerDelegate> delegate;
 
 @property (retain, nonatomic) IBOutlet UIWebView *webView;
 @property (copy, nonatomic) NSString *loginUrl;
