@@ -28,6 +28,7 @@
 @synthesize RESTAPIEndPoint;
 @synthesize oAuthRequestToken;
 @synthesize oAuthRequestTokenSecret;
+@synthesize oAuthLoginUrlFragment;
 
 - (void)dealloc
 {
@@ -138,6 +139,65 @@ NSString *oAuthEscape(NSString *string)
 - (NSString *)queryFromArguments:(NSDictionary *)arguments
 {
     return [RSNetflixAPIContext queryFromArguments:arguments];
+}
+
+- (NSString *)urlEncodedStringFromString:(NSString *)starting
+{
+    // From http://stackoverflow.com/questions/2590545/urlencoding-a-string-with-objective-c
+    NSString *encoded = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                            NULL,
+                                                                            (CFStringRef)starting,
+                                                                            NULL,
+                                                                            (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+                                                                            kCFStringEncodingUTF8 );
+    return encoded;
+}
+
+
+- (NSString *)loginUrlStringWithCallbackUrlString:(NSString *)callbackUrlString
+{
+    NSMutableString *loginUrl = [NSMutableString stringWithString:@""];
+    
+    if(oAuthLoginUrlFragment && callbackUrlString) {
+        NSMutableDictionary *paramsDictionary = [NSMutableDictionary dictionary];
+        // Add our existing params here
+        [paramsDictionary setObject:[self urlEncodedStringFromString:applicationName] forKey:@"application_name"];
+        [paramsDictionary setObject:consumerKey forKey:@"oauth_consumer_key"];
+        [paramsDictionary setObject:oAuthRequestToken forKey:@"oauth_token"];
+        [paramsDictionary setObject:[self urlEncodedStringFromString:callbackUrlString] forKey:@"oauth_callback"];
+        
+        NSString *existingParamString = oAuthLoginUrlFragment.query;
+        if([existingParamString length] > 0) {
+            // Separate into & bits first
+            NSArray *pairs = [existingParamString componentsSeparatedByString:@"&"];
+            for (NSInteger i = 0; i < pairs.count; i++) {
+                NSArray *split = [[pairs objectAtIndex:i] componentsSeparatedByString:@"="];
+                [paramsDictionary setObject:[self urlEncodedStringFromString:[split objectAtIndex:1]] forKey:[split objectAtIndex:0]];
+            }
+        }
+        
+        // params dictionary is full, let's build the string
+        NSMutableString *parametersString = [NSMutableString stringWithString:@""];
+        BOOL parameterAdded = NO;
+        for (NSString *key in paramsDictionary) {
+            NSString *value = [paramsDictionary objectForKey: key];
+            if(parameterAdded) {
+                [parametersString appendString:@"&"];
+            } else {
+                [parametersString appendString:@"?"];
+            }
+            [parametersString appendFormat: @"%@=%@", [self urlEncodedStringFromString:key], [self urlEncodedStringFromString:value]];
+            parameterAdded = YES;
+        }
+        
+        // now reconstruct login url with new parameter string
+        [loginUrl appendFormat:@"%@://",oAuthLoginUrlFragment.scheme];
+        [loginUrl appendString:oAuthLoginUrlFragment.host];
+        [loginUrl appendString:oAuthLoginUrlFragment.path];
+        [loginUrl appendString:parametersString];
+    }
+    
+    return loginUrl;
 }
 
 

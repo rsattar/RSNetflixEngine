@@ -19,6 +19,8 @@
     
     NSString *oAuthRequestToken;
     NSString *oAuthRequestTokenSecret;
+    
+    NSURL *oAuthLoginUrlFragment;
 }
 
 - (id)initWithConsumerKey:(NSString *)inConsumerKey sharedSecret:(NSString *)inSharedSecret applicationName:(NSString *)inApplicationName;
@@ -30,6 +32,7 @@
 // These should be set after receiving a proper response from oauth/request_token
 @property(copy) NSString *oAuthRequestToken;
 @property(copy) NSString *oAuthRequestTokenSecret;
+@property(copy) NSURL *oAuthLoginUrlFragment;
 
 
 /*
@@ -44,6 +47,5 @@
 */
 - (NSString *)queryFromArguments:(NSDictionary *)arguments;
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod;
-
-
+- (NSString *)loginUrlStringWithCallbackUrlString:(NSString *)callbackUrlString;
 @end
