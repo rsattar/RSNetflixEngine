@@ -62,16 +62,77 @@
         [delegate netflixEngine:self requestFailed:requestIdentifier withError:error];
     }
 }
+
+#pragma mark - OAuth tokens (for getting the user's permission to access their info)
+
+- (NSString *)requestOAuthToken
+{
+    return [self requestOAuthTokenWithSuccessBlock:nil errorBlock:nil];
+}
+
+
+- (NSString *)requestOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock
+{
+    /* Typical response:
+     2011-11-06 16:13:36.519 RSNetflixEngine[52813:10103] NetflixAPIRequestDelegate didCompleteWithResponse: 
+     {
+     "application_name" = "Movies on Netflix";
+     "login_url" = "https://api-user.netflix.com/oauth/login?oauth_token=5edcjztdexd8em6czp2tydc4";
+     "oauth_token" = 5edcjztdexd8em6czp2tydc4;
+     "oauth_token_secret" = N4YDE4mPFSGF;
+     }
+     */
+    RSNetflixAPIRequest *request = [[[RSNetflixAPIRequest alloc] initWithAPIContext:apiContext] autorelease];
+    // Even though we're using blocks, we still make ourselves a delegate of this request, so that
+    // we have a singular place we can account for active requests
+    request.delegate = self;
+    
+    [self addRequest:request];
+    
+    return [request callAPIMethod:RSNetflixMethodRequestToken 
+                        arguments:nil 
+                         isSigned:YES 
+                 withSuccessBlock:^(NSDictionary *response) {
+                     NSLog(@"OAuthTokenRequest completed in RSNetflixEngine!");
+                     
+                     // Update our API Context with the oAuthRequestToken and oAuthRequestTokenSecret
+                     apiContext.oAuthRequestToken = [response objectForKey:@"oauth_token"];
+                     apiContext.oAuthRequestTokenSecret = [response objectForKey:@"oauth_token_secret"];
+                     apiContext.oAuthLoginUrlFragment = [NSURL URLWithString:[response objectForKey:@"login_url"]];
+                     
+                     NSString *completeLoginUrlString = [apiContext constructUserLoginUrlString];
+                     
+                     // Now request specific
+                     if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenRequestSucceededWithLoginUrlString:forRequestId:)]) {
+                         [delegate netflixEngine:self oAuthTokenRequestSucceededWithLoginUrlString:completeLoginUrlString forRequestId:request.identifier];
+                     }
+                     
+                     if(successBlock) {
+                         successBlock(completeLoginUrlString);
+                     }
+                     
+                 }
+                       errorBlock:^(NSError *error) {
+                           NSLog(@"OAuthTokenRequest failed in RSNetflixEngine!");
+                           
+                           if(errorBlock) {
+                               errorBlock(error);
+                           }
+                               
+                       }];
+    
+}
+
 #pragma mark -
 #pragma mark Catalog methods
 
 
-- (void)searchForTitlesMatchingTerm:(NSString*)term
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term
 {
-    [self searchForTitlesMatchingTerm:term withMaxResults:-1 andPageOffset:0];
+    return [self searchForTitlesMatchingTerm:term withMaxResults:-1 andPageOffset:0];
 }
 
-- (void)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset
 {
     if(maxResults < 0)
     {
@@ -88,9 +149,9 @@
                                term,@"term",
                                [[NSNumber numberWithInteger:pageOffset] stringValue],@"start_index",
                                nil];
-    [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES];
     
     [self addRequest:request];
+    return [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES];
 }
 
 
@@ -137,6 +198,9 @@
 #pragma mark -
 #pragma Constant Declarations
 // Declaring REST method names as constants
+NSString * const RSNetflixMethodRequestToken = @"oauth/request_token";
+NSString * const RSNetflixMethodAccessToken = @"oauth/access_token";
+
 NSString * const RSNetflixMethodSearchCatalogTitles = @"catalog/titles";
 NSString * const RSNetflixMethodAutocompleteCatalogTitles = @"catalog/titles/autocomplete";
 NSString * const RSNetflixMethodRetrieveAllCatalogTitles = @"catalog/titles/index";

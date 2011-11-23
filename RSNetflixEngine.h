@@ -20,6 +20,9 @@
 
 - (void)netflixEngine:(RSNetflixEngine *)engine requestSucceeded:(NSString *)identifier withResponse:(NSDictionary *)response;
 - (void)netflixEngine:(RSNetflixEngine *)engine requestFailed:(NSString *)identifier withError:(NSError *)error;
+
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId;
+
 @end
 
 @interface RSNetflixEngine : NSObject <RSNetflixAPIRequestDelegate> {
@@ -40,11 +43,17 @@
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 
-- (void)searchForTitlesMatchingTerm:(NSString*)term;
-- (void)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
+// Methods for making Protected (subscriber granted access) calls
+- (NSString *)requestOAuthToken;
+- (NSString *)requestOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
+
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
 
 
 // Declaring REST method names as constants
+extern NSString * const RSNetflixMethodRequestToken;
+
 extern NSString * const RSNetflixMethodSearchCatalogTitles;
 extern NSString * const RSNetflixMethodAutocompleteCatalogTitles;
 extern NSString * const RSNetflixMethodRetrieveAllCatalogTitles;

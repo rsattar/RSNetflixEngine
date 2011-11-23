@@ -35,20 +35,29 @@
     
     
     netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
+    netflixAPIContext.userLoginCallbackUrl = @"foo://bar";
     /*
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     request.delegate = self;
     [request callAPIMethod:RSNetflixMethodSearchPeople arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     */
     
-    /*
+    
     netflix = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
     netflix.delegate = self;
     //[netflixEngine searchForTitlesMatchingTerm:@"Star"];
-    oAuthRequestId = [[netflix requestOAuthToken] retain];
-    */
+    //oAuthRequestId = [[netflix requestOAuthToken] retain];
+    [netflix requestOAuthTokenWithSuccessBlock:^(NSString *loginUrl) {
+        
+        NSLog(@"OMG Received an oauth response! Login url is: %@",loginUrl);
+    }
+                                    errorBlock:^(NSError *error) {
+                                        NSLog(@"OMG received an error for requesting oauth token via block");
+                                    }];
+    
     
     // Testing blocks out with API Requests
+    /*
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     [request callAPIMethod:RSNetflixMethodSearchPeople 
                  arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] 
@@ -59,6 +68,7 @@
                 errorBlock:^(NSError *error) {
                     NSLog(@"Got error back as block! %@", error);
                 }];
+     */
     return YES;
 }
 
@@ -121,6 +131,10 @@
 {
     NSLog(@"RSNetflixEngineDelegate didFailWithError");
 }
+
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId
+{
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:loginUrl]];
 }
 
 @end
