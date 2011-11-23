@@ -10,6 +10,18 @@
 #import "RSNetflixAPIContext.h"
 #import "RSNetflixAPIRequest.h"
 
+
+@class RSNetflixEngine;
+
+
+@protocol RSNetflixEngineDelegate <NSObject>
+
+@optional
+
+- (void)netflixEngine:(RSNetflixEngine *)engine requestSucceeded:(NSString *)identifier withResponse:(NSDictionary *)response;
+- (void)netflixEngine:(RSNetflixEngine *)engine requestFailed:(NSString *)identifier withError:(NSError *)error;
+@end
+
 @interface RSNetflixEngine : NSObject <RSNetflixAPIRequestDelegate> {
     
     RSNetflixAPIContext *apiContext;
@@ -21,10 +33,10 @@
     // In our implementation, we'll "proxy" the delegate callback
     // so that we can track the response ourselves first
     
-    id<RSNetflixAPIRequestDelegate> delegate;
+    id<RSNetflixEngineDelegate> delegate;
 }
 
-@property(assign) id<RSNetflixAPIRequestDelegate> delegate;
+@property(assign) id<RSNetflixEngineDelegate> delegate;
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 

@@ -46,6 +46,22 @@
     return self;
 }
 
+#pragma mark - Delegate convenience methods
+- (void)notifyDelegateOfRequestSuccess:(NSString *)requestIdentifier response:(NSDictionary *)response
+{
+    // Notify our engine delegate
+    if([self isValidDelegateForSelector:@selector(netflixEngine:requestSucceeded:withResponse:)]) {
+        [delegate netflixEngine:self requestSucceeded:requestIdentifier withResponse:response];
+    }
+}
+
+- (void)notifyDelegateOfRequestFailure:(NSString *)requestIdentifier withError:(NSError *)error
+{
+    // Notify our engine delegate
+    if([self isValidDelegateForSelector:@selector(netflixEngine:requestFailed:withError:)]) {
+        [delegate netflixEngine:self requestFailed:requestIdentifier withError:error];
+    }
+}
 #pragma mark -
 #pragma mark Catalog methods
 
@@ -86,16 +102,14 @@
 {
     [self removeRequest:inRequest];
     
-    if ([self isValidDelegateForSelector:@selector(netflixAPIRequest:didCompleteWithResponse:)])
-        [delegate netflixAPIRequest:inRequest didCompleteWithResponse:inResponseDictionary];
+    [self notifyDelegateOfRequestSuccess:inRequest.identifier response:inResponseDictionary];
 }
 
 - (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didFailWithError:(NSError *)inError
 {
     [self removeRequest:inRequest];
     
-    if ([self isValidDelegateForSelector:@selector(netflixAPIRequest:didFailWithError:)])
-        [delegate netflixAPIRequest:inRequest didFailWithError:inError];
+    [self notifyDelegateOfRequestFailure:inRequest.identifier withError:inError];
 }
 
 #pragma mark Request Management

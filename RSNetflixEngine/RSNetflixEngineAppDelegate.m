@@ -110,16 +110,17 @@
 }
 
 #pragma mark -
-#pragma mark API Request delegate
+#pragma mark Engine Request delegate
 
-- (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didCompleteWithResponse:(NSDictionary *)inResponseDictionary
+- (void)netflixEngine:(RSNetflixEngine *)engine requestSucceeded:(NSString *)identifier withResponse:(NSDictionary *)response
 {
-    NSLog(@"NetflixAPIRequestDelegate didCompleteWithResponse: \n%@", inResponseDictionary);
+    NSLog(@"RSNetflixEngineDelegate didComplete for request id %@ with response \n%@", identifier, response);
 }
 
-- (void)netflixAPIRequest:(RSNetflixAPIRequest *)inRequest didFailWithError:(NSError *)inError
+- (void)netflixEngine:(RSNetflixEngine *)engine requestFailed:(NSString *)identifier withError:(NSError *)error
 {
-    NSLog(@"NetflixAPIRequestDelegate didFailWithError");
+    NSLog(@"RSNetflixEngineDelegate didFailWithError");
+}
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RSNetflixEngine.h"
 
-@interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixAPIRequestDelegate> {
+@interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixEngineDelegate> {
 
     RSNetflixEngine *netflix;
     RSNetflixAPIContext *netflixAPIContext;
