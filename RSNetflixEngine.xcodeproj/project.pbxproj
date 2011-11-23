@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		655EEEF7147CD1A600229590 /* RSUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */; };
+		655EEEF8147CD1A600229590 /* RSUserLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */; };
 		6595FC871393364D0061AA35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC861393364D0061AA35 /* UIKit.framework */; };
 		6595FC891393364E0061AA35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC881393364D0061AA35 /* Foundation.framework */; };
 		6595FC8B1393364E0061AA35 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC8A1393364E0061AA35 /* CoreGraphics.framework */; };
@@ -24,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		655EEEF4147CD1A600229590 /* RSUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUserLoginViewController.h; sourceTree = "<group>"; };
+		655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSUserLoginViewController.m; sourceTree = "<group>"; };
+		655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSUserLoginViewController.xib; sourceTree = "<group>"; };
 		6595FC821393364D0061AA35 /* RSNetflixEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSNetflixEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6595FC861393364D0061AA35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6595FC881393364D0061AA35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,6 +104,9 @@
 		6595FC8C1393364E0061AA35 /* RSNetflixEngine */ = {
 			isa = PBXGroup;
 			children = (
+				655EEEF4147CD1A600229590 /* RSUserLoginViewController.h */,
+				655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */,
+				655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */,
 				6595FC951393364E0061AA35 /* RSNetflixEngineAppDelegate.h */,
 				6595FC961393364E0061AA35 /* RSNetflixEngineAppDelegate.m */,
 				6595FC981393364E0061AA35 /* MainWindow.xib */,
@@ -199,6 +207,7 @@
 				6595FC911393364E0061AA35 /* InfoPlist.strings in Resources */,
 				6595FC9A1393364E0061AA35 /* MainWindow.xib in Resources */,
 				6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */,
+				655EEEF8147CD1A600229590 /* RSUserLoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +226,7 @@
 				65CDF044139C223C008F4C9E /* Base64Transcoder.c in Sources */,
 				65CDF047139C2921008F4C9E /* RSNetflixAPIRequest.m in Sources */,
 				65CDF04A139C29E5008F4C9E /* RSNetflixAPIContext.m in Sources */,
+				655EEEF7147CD1A600229590 /* RSUserLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,20 @@
 
 @synthesize navigationController=_navigationController;
 
+
+
+- (NSString *)urlEncodedStringFromString:(NSString *)starting
+{
+    // From http://stackoverflow.com/questions/2590545/urlencoding-a-string-with-objective-c
+    NSString *encoded = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                            NULL,
+                                                                            (CFStringRef)starting,
+                                                                            NULL,
+                                                                            (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+                                                                            kCFStringEncodingUTF8 );
+    return encoded;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
@@ -35,7 +49,8 @@
     
     
     netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
-    netflixAPIContext.userLoginCallbackUrl = @"foo://bar";
+    NSString *loginCallback = @"http://doesnotexistbutuniqueenoughtocatch.com";
+    netflixAPIContext.userLoginCallbackUrl = [self urlEncodedStringFromString:loginCallback];
     /*
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     request.delegate = self;
@@ -115,6 +130,7 @@
 {
     [_window release];
     [_navigationController release];
+    [loginViewController release];
     [netflix release];
     [super dealloc];
 }
@@ -135,6 +151,11 @@
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId
 {
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:loginUrl]];
+    loginViewController = [[RSUserLoginViewController alloc] initWithNibName:@"RSUserLoginViewController" bundle:[NSBundle mainBundle]];
+    loginViewController.loginUrl = loginUrl;
+    loginViewController.callBackUrl = netflixAPIContext.userLoginCallbackUrl;
+    
+    [self.navigationController presentModalViewController:loginViewController animated:YES];
 }
 
 @end

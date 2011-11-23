@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "RSNetflixEngine.h"
+#import "RSUserLoginViewController.h"
 
 @interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixEngineDelegate> {
 
     RSNetflixEngine *netflix;
     RSNetflixAPIContext *netflixAPIContext;
+    
+    RSUserLoginViewController *loginViewController;
     
 }
 
