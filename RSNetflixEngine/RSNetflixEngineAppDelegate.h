@@ -10,7 +10,7 @@
 #import "RSNetflixEngine.h"
 #import "RSUserLoginViewController.h"
 
-@interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixEngineDelegate> {
+@interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixEngineDelegate, RSUserLoginViewControllerDelegate> {
 
     RSNetflixEngine *netflix;
     RSNetflixAPIContext *netflixAPIContext;

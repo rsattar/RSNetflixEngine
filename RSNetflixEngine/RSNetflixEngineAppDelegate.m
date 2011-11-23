@@ -49,8 +49,8 @@
     
     
     netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
-    NSString *loginCallback = @"http://doesnotexistbutuniqueenoughtocatch.com";
-    netflixAPIContext.userLoginCallbackUrl = [self urlEncodedStringFromString:loginCallback];
+    NSString *loginCallback = @"foo://bar";//@"http://doesnotexistbutuniqueenoughtocatch.com";
+    netflixAPIContext.userLoginCallbackUrl = loginCallback;//[self urlEncodedStringFromString:loginCallback];
     /*
     RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
     request.delegate = self;
@@ -152,10 +152,26 @@
 {
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:loginUrl]];
     loginViewController = [[RSUserLoginViewController alloc] initWithNibName:@"RSUserLoginViewController" bundle:[NSBundle mainBundle]];
+    loginViewController.delegate = self;
     loginViewController.loginUrl = loginUrl;
     loginViewController.callBackUrl = netflixAPIContext.userLoginCallbackUrl;
     
     [self.navigationController presentModalViewController:loginViewController animated:YES];
+}
+
+#pragma - RSUserLoginViewControllerDelegate
+
+- (void)userLoginViewControllerSucceeded:(RSUserLoginViewController *)viewController withResponse:(NSDictionary *)loginResponse {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [loginViewController release];
+    }];
+    
+    //NSString *oAuthAccessToken = [loginResponse objectForKey:@"oauth_token"];
+}
+- (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [loginViewController release];
+    }];
 }
 
 @end
