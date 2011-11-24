@@ -15,7 +15,7 @@
 
 @interface RSNetflixAPIContext (PrivateMethods)
 
-+ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret httpMethod:(NSString *)httpMethod;
++ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret authorizedToken:(NSString *)authorizedToken httpMethod:(NSString *)httpMethod;
 + (NSString *)queryFromArguments:(NSDictionary *)arguments;
 
 @end
@@ -29,6 +29,7 @@
 @synthesize userLoginCallbackUrl;
 @synthesize oAuthRequestToken;
 @synthesize oAuthRequestTokenSecret;
+@synthesize oAuthAuthorizedToken;
 @synthesize oAuthLoginUrlFragment;
 
 - (void)dealloc
@@ -51,6 +52,9 @@
         consumerKey = [inConsumerKey copy];
         sharedSecret = [inSharedSecret copy];
         applicationName = [inApplicationName copy];
+        
+        // Set our authorized token to "" so signed requests still work
+        self.oAuthAuthorizedToken = @"";
         
         self.RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
         self.userLoginCallbackUrl = @"";
@@ -84,7 +88,7 @@ NSString *oAuthEscape(NSString *string)
 
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod
 {
-    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndPoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret httpMethod:httpMethod];
+    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndPoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret authorizedToken:oAuthAuthorizedToken httpMethod:httpMethod];
 }
 
 - (NSString *)queryFromArguments:(NSDictionary *)arguments
@@ -191,7 +195,7 @@ NSString *oAuthEscape(NSString *string)
     return [parameters componentsJoinedByString:@"&"];
 }
 
-+ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret httpMethod:(NSString *)httpMethod
++ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret authorizedToken:(NSString *)authorizedToken httpMethod:(NSString *)httpMethod
 {
     // Add our "authentication" parameters to the arguments
     NSMutableDictionary *newArgs = [NSMutableDictionary dictionaryWithDictionary:arguments];
@@ -217,6 +221,13 @@ NSString *oAuthEscape(NSString *string)
     // oauth_version - (optional) if you include this, you must set it to "1.0" (which is also the default)
     [newArgs setObject:@"1.0" forKey:@"oauth_version"];
     
+    // If we have the authorized token, it means we've been through one oauth/request_token request and the
+    // user granted us permission to access their information.
+    // It also means that if we pass in oauth_token (and sign with it), our quota for requests is much higher
+    if([authorizedToken length]) {
+        [newArgs setObject:authorizedToken forKey:@"oauth_token"];
+    }
+    
     // Generate sorted queryString
     NSArray *sortedParameterKeys = [[newArgs allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSString *parameterKey;
@@ -238,7 +249,7 @@ NSString *oAuthEscape(NSString *string)
     NSString *baseString = [NSString stringWithFormat:@"%@&%@&%@",httpMethod,encodedBaseURLAndMethod,encodedSortedQueryString];
     
     // Create signature
-    NSString *signature = [RSNetflixAPIContext HMAC_SHA1SignatureForText:baseString usingSecret:[NSString stringWithFormat:@"%@&",sharedSecret]];
+    NSString *signature = [RSNetflixAPIContext HMAC_SHA1SignatureForText:baseString usingSecret:[NSString stringWithFormat:@"%@&%@",sharedSecret,authorizedToken]];
     
     
     NSString *queryString = [sortedQueryString stringByAppendingString:[NSString stringWithFormat:@"&oauth_signature=%@",oAuthEscape(signature)]];
