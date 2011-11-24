@@ -26,6 +26,7 @@
 @implementation RSNetflixEngine
 
 @synthesize delegate;
+@synthesize apiContext;
 
 - (void)dealloc
 {
@@ -39,7 +40,7 @@
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext
 {
     if ((self = [super init])) {
-        apiContext = [inAPIContext retain];
+        self.apiContext = inAPIContext;
         
         activeURLConnections = [[NSMutableArray array] retain];
     }

@@ -40,6 +40,7 @@
 }
 
 @property(assign) id<RSNetflixEngineDelegate> delegate;
+@property(retain,nonatomic) RSNetflixAPIContext *apiContext;
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 
