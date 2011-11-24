@@ -24,6 +24,7 @@
     // we get protected access and can use this with sharedSecret
     // to sign our requests, greatly lifting our API call quota
     NSString *oAuthAuthorizedToken;
+    NSString *oAuthAuthorizedTokenSecret;
     
     NSURL *oAuthLoginUrlFragment;
 }
@@ -39,6 +40,7 @@
 @property(copy) NSString *oAuthRequestToken;
 @property(copy) NSString *oAuthRequestTokenSecret;
 @property(copy) NSString *oAuthAuthorizedToken;
+@property(copy) NSString *oAuthAuthorizedTokenSecret;
 @property(copy) NSURL *oAuthLoginUrlFragment;
 
 
