@@ -163,14 +163,14 @@
 
 - (void)userLoginViewControllerSucceeded:(RSUserLoginViewController *)viewController withResponse:(NSDictionary *)loginResponse {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        [loginViewController release];
+        [loginViewController autorelease];
     }];
     
     //NSString *oAuthAccessToken = [loginResponse objectForKey:@"oauth_token"];
 }
 - (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        [loginViewController release];
+        [loginViewController autorelease];
     }];
 }
 
