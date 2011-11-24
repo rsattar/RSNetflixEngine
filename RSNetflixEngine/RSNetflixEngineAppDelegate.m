@@ -166,7 +166,11 @@
         [loginViewController autorelease];
     }];
     
-    //NSString *oAuthAccessToken = [loginResponse objectForKey:@"oauth_token"];
+    NSString *oAuthAuthorizedToken = [loginResponse objectForKey:@"oauth_token"];
+    // From now on, all signed requests, will actually be made as protected requests, 
+    // which has a higher quota, and can do more things
+    netflix.apiContext.oAuthAuthorizedToken = oAuthAuthorizedToken;
+    
 }
 - (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
