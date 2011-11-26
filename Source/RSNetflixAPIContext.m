@@ -32,6 +32,7 @@
 @synthesize oAuthRequestTokenSecret;
 @synthesize oAuthAuthorizedToken;
 @synthesize oAuthAuthorizedTokenSecret;
+@synthesize userId;
 @synthesize oAuthLoginUrlFragment;
 
 - (void)dealloc
@@ -60,6 +61,7 @@
         // Set our authorized token to "" so signed requests still work
         self.oAuthAuthorizedToken = @"";
         self.oAuthAuthorizedTokenSecret = @"";
+        self.userId = @"";
         
         self.RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
         self.userLoginCallbackUrl = @"";

@@ -25,6 +25,7 @@
     // to sign our requests, greatly lifting our API call quota
     NSString *oAuthAuthorizedToken;
     NSString *oAuthAuthorizedTokenSecret;
+    NSString *userId;
     
     NSURL *oAuthLoginUrlFragment;
 }
@@ -41,6 +42,7 @@
 @property(copy) NSString *oAuthRequestTokenSecret;
 @property(copy) NSString *oAuthAuthorizedToken;
 @property(copy) NSString *oAuthAuthorizedTokenSecret;
+@property(copy) NSString *userId;
 @property(copy) NSURL *oAuthLoginUrlFragment;
 
 
