@@ -58,7 +58,7 @@ static NSMutableArray *activeRequests = nil;
     return self;
 }
 
-- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned 
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod
 {
     
     // combine the parameters 
@@ -79,7 +79,7 @@ static NSMutableArray *activeRequests = nil;
     
     NSString *query = nil;
     if(isSigned) {
-        query = [apiContext signedQueryFromArguments:newArgs methodName:methodName httpMethod:@"GET"];
+        query = [apiContext signedQueryFromArguments:newArgs methodName:methodName httpMethod:httpMethod];
     } else {
         query = [apiContext queryFromArguments:newArgs];
     }
@@ -100,7 +100,7 @@ static NSMutableArray *activeRequests = nil;
     return identifier;
 }
 
-- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned withSuccessBlock:(void (^)(NSDictionary *response))inSuccessBlock errorBlock:(void (^)(NSError *error))inErrorBlock
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned  httpMethod:(NSString *)httpMethod withSuccessBlock:(void (^)(NSDictionary *response))inSuccessBlock errorBlock:(void (^)(NSError *error))inErrorBlock
 {
     // Save our successBlock and errorBlock for calling back later
     [successBlock release];
@@ -108,7 +108,7 @@ static NSMutableArray *activeRequests = nil;
     [errorBlock release];
     errorBlock = [inErrorBlock copy];
     // now call as usual
-    return [self callAPIMethod:methodName arguments:arguments isSigned:isSigned];
+    return [self callAPIMethod:methodName arguments:arguments isSigned:isSigned httpMethod:httpMethod];
 }
 
 - (void)notifyDelegateOfError:(NSError *)error
@@ -186,5 +186,12 @@ static NSMutableArray *activeRequests = nil;
     CFRelease(uuidObj);
     return [newUUID autorelease];
 }
+
+#pragma - Constant Declarations
+// Declaring REST method names as constants
+NSString * const RSNetflixAPIHttpMethodGet      = @"GET";
+NSString * const RSNetflixAPIHttpMethodPut      = @"PUT";
+NSString * const RSNetflixAPIHttpMethodPost     = @"POST";
+NSString * const RSNetflixAPIHttpMethodDelete   = @"DELETE";
 
 @end

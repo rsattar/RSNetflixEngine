@@ -93,6 +93,7 @@
     return [request callAPIMethod:RSNetflixMethodRequestToken 
                         arguments:nil 
                          isSigned:YES 
+                       httpMethod:RSNetflixAPIHttpMethodGet
                  withSuccessBlock:^(NSDictionary *response) {
                      NSLog(@"OAuthTokenRequest completed in RSNetflixEngine!");
                      
@@ -143,6 +144,7 @@
     return [request callAPIMethod:RSNetflixMethodAccessToken 
                         arguments:nil 
                          isSigned:YES 
+                       httpMethod:RSNetflixAPIHttpMethodGet
                  withSuccessBlock:^(NSDictionary *response) {
                      NSLog(@"OAuthAccesssTokenRequest completed in RSNetflixEngine with response: \n%@", response);
                      
@@ -204,6 +206,7 @@
     return [request callAPIMethod:[NSString stringWithFormat:@"users/%@",userId] 
                         arguments:nil 
                          isSigned:YES 
+                       httpMethod:RSNetflixAPIHttpMethodGet
                  withSuccessBlock:^(NSDictionary *response) {
                      NSLog(@"retrieveUserInformationForUserId completed in RSNetflixEngine with response: \n%@", response);
                      
@@ -262,7 +265,7 @@
                                nil];
     
     [self addRequest:request];
-    return [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES];
+    return [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES httpMethod:RSNetflixAPIHttpMethodGet];
 }
 
 

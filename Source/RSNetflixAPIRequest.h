@@ -45,6 +45,14 @@ typedef void (^RSNetflixAPIRequestErrorBlock)(NSError *);
 @property(readonly) NSString *identifier;
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
-- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned;
-- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)successBlock errorBlock:(RSNetflixAPIRequestErrorBlock)errorBlock;
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod;
+- (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)successBlock errorBlock:(RSNetflixAPIRequestErrorBlock)errorBlock;
+
+#pragma - Constants for HTTP Methods
+
+extern NSString * const RSNetflixAPIHttpMethodGet;
+extern NSString * const RSNetflixAPIHttpMethodPut;
+extern NSString * const RSNetflixAPIHttpMethodPost;
+extern NSString * const RSNetflixAPIHttpMethodDelete;
+
 @end
