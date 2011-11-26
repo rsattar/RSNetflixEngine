@@ -76,6 +76,47 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        self.consumerKey = [decoder decodeObjectForKey:@"consumerKey"];
+        self.sharedSecret = [decoder decodeObjectForKey:@"sharedSecret"];
+        self.applicationName = [decoder decodeObjectForKey:@"applicationName"];
+        
+        self.oAuthRequestToken = [decoder decodeObjectForKey:@"oAuthRequestToken"];
+        self.oAuthRequestTokenSecret = [decoder decodeObjectForKey:@"oAuthRequestTokenSecret"];
+        
+        self.oAuthAccessToken = [decoder decodeObjectForKey:@"oAuthAccessToken"];
+        self.oAuthAccessTokenSecret = [decoder decodeObjectForKey:@"oAuthAccessTokenSecret"];
+        self.userId = [decoder decodeObjectForKey:@"userId"];
+        
+        self.RESTAPIEndPoint = [decoder decodeObjectForKey:@"RESTAPIEndPoint"];
+        self.userLoginCallbackUrl = [decoder decodeObjectForKey:@"userLoginCallbackUrl"];
+        if([decoder containsValueForKey:@"oAuthLoginUrlFragment"]) {
+            self.oAuthLoginUrlFragment = [decoder decodeObjectForKey:@"oAuthLoginUrlFragment"];
+        }
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:consumerKey forKey:@"consumerKey"];
+    [encoder encodeObject:sharedSecret forKey:@"sharedSecret"];
+    [encoder encodeObject:applicationName forKey:@"applicationName"];
+    
+    [encoder encodeObject:oAuthRequestToken forKey:@"oAuthRequestToken"];
+    [encoder encodeObject:oAuthRequestTokenSecret forKey:@"oAuthRequestTokenSecret"];
+    
+    [encoder encodeObject:oAuthAccessToken forKey:@"oAuthAccessToken"];
+    [encoder encodeObject:oAuthAccessTokenSecret forKey:@"oAuthAccessTokenSecret"];
+    [encoder encodeObject:userId forKey:@"userId"];
+    
+    [encoder encodeObject:RESTAPIEndPoint forKey:@"RESTAPIEndPoint"];
+    [encoder encodeObject:userLoginCallbackUrl forKey:@"userLoginCallbackUrl"];
+    if(oAuthLoginUrlFragment != nil) {
+        [encoder encodeObject:oAuthLoginUrlFragment forKey:@"oAuthLoginUrlFragment"];
+    }
+}
+
 #pragma mark -
 #pragma Query Building and Signing
 

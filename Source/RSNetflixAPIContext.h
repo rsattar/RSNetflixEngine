@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface RSNetflixAPIContext : NSObject {
+@interface RSNetflixAPIContext : NSObject <NSCoding> {
     
     NSString *consumerKey;
     NSString *sharedSecret;
