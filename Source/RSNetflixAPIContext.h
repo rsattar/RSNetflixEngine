@@ -23,8 +23,8 @@
     // once we get the user to link our app to their account,
     // we get protected access and can use this with sharedSecret
     // to sign our requests, greatly lifting our API call quota
-    NSString *oAuthAuthorizedToken;
-    NSString *oAuthAuthorizedTokenSecret;
+    NSString *oAuthAccessToken;
+    NSString *oAuthAccessTokenSecret;
     NSString *userId;
     
     NSURL *oAuthLoginUrlFragment;
@@ -40,8 +40,8 @@
 // These should be set after receiving a proper response from oauth/request_token
 @property(copy) NSString *oAuthRequestToken;
 @property(copy) NSString *oAuthRequestTokenSecret;
-@property(copy) NSString *oAuthAuthorizedToken;
-@property(copy) NSString *oAuthAuthorizedTokenSecret;
+@property(copy) NSString *oAuthAccessToken;
+@property(copy) NSString *oAuthAccessTokenSecret;
 @property(copy) NSString *userId;
 @property(copy) NSURL *oAuthLoginUrlFragment;
 

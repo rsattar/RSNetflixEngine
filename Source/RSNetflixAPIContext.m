@@ -30,8 +30,8 @@
 @synthesize userLoginCallbackUrl;
 @synthesize oAuthRequestToken;
 @synthesize oAuthRequestTokenSecret;
-@synthesize oAuthAuthorizedToken;
-@synthesize oAuthAuthorizedTokenSecret;
+@synthesize oAuthAccessToken;
+@synthesize oAuthAccessTokenSecret;
 @synthesize userId;
 @synthesize oAuthLoginUrlFragment;
 
@@ -44,8 +44,8 @@
     [userLoginCallbackUrl release];
     [oAuthRequestToken release];
     [oAuthRequestTokenSecret release];
-    [oAuthAuthorizedToken release];
-    [oAuthAuthorizedTokenSecret release];
+    [oAuthAccessToken release];
+    [oAuthAccessTokenSecret release];
     
     [super dealloc];
 }
@@ -59,8 +59,8 @@
         applicationName = [inApplicationName copy];
         
         // Set our authorized token to "" so signed requests still work
-        self.oAuthAuthorizedToken = @"";
-        self.oAuthAuthorizedTokenSecret = @"";
+        self.oAuthAccessToken = @"";
+        self.oAuthAccessTokenSecret = @"";
         self.userId = @"";
         
         self.RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
@@ -109,8 +109,8 @@ NSString *oAuthEscape(NSString *string)
 
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod
 {
-    NSString *tokenToUse = oAuthAuthorizedToken;
-    NSString *tokenSecretToUse = oAuthAuthorizedTokenSecret;
+    NSString *tokenToUse = oAuthAccessToken;
+    NSString *tokenSecretToUse = oAuthAccessTokenSecret;
     if([methodName isEqualToString:@"oauth/access_token"]) {
         tokenToUse = oAuthRequestToken;
         // In case this is our special case access_token call, our signature is signed by:

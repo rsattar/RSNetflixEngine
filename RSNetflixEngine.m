@@ -158,8 +158,8 @@
                          */
                          
                          // Update our API Context with the oAuthRequestToken and oAuthRequestTokenSecret
-                         apiContext.oAuthAuthorizedToken = [response objectForKey:@"oauth_token"];
-                         apiContext.oAuthAuthorizedTokenSecret = [response objectForKey:@"oauth_token_secret"];
+                         apiContext.oAuthAccessToken = [response objectForKey:@"oauth_token"];
+                         apiContext.oAuthAccessTokenSecret = [response objectForKey:@"oauth_token_secret"];
                          apiContext.userId = [response objectForKey:@"user_id"];
                                                                   
                          
