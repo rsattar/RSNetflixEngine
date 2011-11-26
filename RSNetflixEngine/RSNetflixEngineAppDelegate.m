@@ -159,6 +159,13 @@
     [self.navigationController presentModalViewController:loginViewController animated:YES];
 }
 
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId
+{
+    // Make a access-only request, like users/user_id
+    [netflix retrieveUserInformationForUserId:netflix.apiContext.userId];
+    
+}
+
 #pragma - RSUserLoginViewControllerDelegate
 
 - (void)userLoginViewControllerSucceeded:(RSUserLoginViewController *)viewController withResponse:(NSDictionary *)loginResponse {

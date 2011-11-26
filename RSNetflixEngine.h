@@ -23,6 +23,7 @@
 
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId;
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId;
+- (void)netflixEngine:(RSNetflixEngine *)engine userInformationRetrieved:(NSDictionary *)information forRequestId:(NSString *)requestId;
 
 @end
 
@@ -45,6 +46,7 @@
 
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 
+#pragma mark - Protected Requests (requires subsciber-granted access)
 // Methods for making Protected (subscriber granted access) calls
 - (NSString *)requestOAuthToken;
 - (NSString *)requestOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
@@ -52,6 +54,10 @@
 - (NSString *)accessOAuthToken;
 - (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(void))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
+- (NSString *)retrieveUserInformationForUserId:(NSString *)userId;
+- (NSString *)retrieveUserInformationForUserId:(NSString *)userId withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
+
+#pragma mark - Signed Requests
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
 
