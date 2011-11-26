@@ -46,25 +46,32 @@
     [oAuthRequestTokenSecret release];
     [oAuthAccessToken release];
     [oAuthAccessTokenSecret release];
+    [userId release];
+    [oAuthLoginUrlFragment release];
     
     [super dealloc];
 }
 
-
 - (id)initWithConsumerKey:(NSString *)inConsumerKey sharedSecret:(NSString *)inSharedSecret applicationName:(NSString *)inApplicationName
 {
     if ((self = [super init])) {
-        consumerKey = [inConsumerKey copy];
-        sharedSecret = [inSharedSecret copy];
-        applicationName = [inApplicationName copy];
+        self.consumerKey = inConsumerKey;
+        self.sharedSecret = inSharedSecret;
+        self.applicationName = inApplicationName;
         
-        // Set our authorized token to "" so signed requests still work
+        // Set our Request tokens to "" because we only set them
+        // if we're in the middle of retrieving access tokens
+        self.oAuthRequestToken = @"";
+        self.oAuthRequestTokenSecret = @"";
+        
+        // Set our access to "" so signed requests still work
         self.oAuthAccessToken = @"";
         self.oAuthAccessTokenSecret = @"";
         self.userId = @"";
         
         self.RESTAPIEndPoint = kDefaultNetflixRESTAPIEndpoint;
         self.userLoginCallbackUrl = @"";
+        self.oAuthLoginUrlFragment = nil;
     }
     return self;
 }

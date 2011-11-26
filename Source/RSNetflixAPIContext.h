@@ -46,16 +46,6 @@
 @property(copy) NSURL *oAuthLoginUrlFragment;
 
 
-/*
-- (void)setConsumerKey:(NSString *)inConsumerKey;
-- (NSString *)consumerKey;
-- (void)setSharedSecret:(NSString *)inSharedSecret;
-- (NSString *)sharedSecret;
-- (void)setApplicationName:(NSString *)inApplicationName;
-- (NSString *)applicationName;
-- (void)setRESTAPIEndpoint:(NSString *)inRESTAPIEndpoint;
-- (NSString *)RESTAPIEndpoint;
-*/
 - (NSString *)queryFromArguments:(NSDictionary *)arguments;
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod;
 - (NSString *)constructUserLoginUrlString;
