@@ -7,6 +7,7 @@
 //
 
 #import "RSNetflixAPIContext.h"
+#import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import "Base64Transcoder.h"
 
@@ -90,9 +91,33 @@ NSString *oAuthEscape(NSString *string)
     return string;
 }
 
+
+//generate md5 hash from string
+// From: http://www.saobart.com/md5-has-in-objective-c/
++ (NSString *) returnMD5Hash:(NSString*)concat {
+    const char *concat_str = [concat UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(concat_str, strlen(concat_str), result);
+    NSMutableString *hash = [NSMutableString string];
+    for (int i = 0; i < 16; i++)
+        [hash appendFormat:@"%02X", result[i]];
+    return [hash lowercaseString];
+    
+}
+
 - (NSString *)signedQueryFromArguments:(NSDictionary *)arguments methodName:(NSString *)methodName httpMethod:(NSString *)httpMethod
 {
-    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndPoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret authorizedToken:oAuthAuthorizedToken authorizedTokenSecret:oAuthAuthorizedTokenSecret httpMethod:httpMethod];
+    NSString *tokenToUse = oAuthAuthorizedToken;
+    NSString *tokenSecretToUse = oAuthAuthorizedTokenSecret;
+    if([methodName isEqualToString:@"oauth/access_token"]) {
+        tokenToUse = oAuthRequestToken;
+        // In case this is our special case access_token call, our signature is signed by:
+        // sharedSecret&requestTokenSecret
+        // instead of:
+        // sharedSecret&authorizedTokenSecret
+        tokenSecretToUse = oAuthRequestTokenSecret;
+    }
+    return [RSNetflixAPIContext signedQueryFromArguments:arguments baseURL:RESTAPIEndPoint method:methodName consumerKey:consumerKey sharedSecret:sharedSecret token:tokenToUse tokenSecret:tokenSecretToUse httpMethod:httpMethod];
 }
 
 - (NSString *)queryFromArguments:(NSDictionary *)arguments
@@ -216,7 +241,9 @@ NSString *oAuthEscape(NSString *string)
     
     // oauth_nonce - a random string of characters that differs from call to call (this helps to prevent replay attacks)
     // For now, let's just use our timestamp
-    [newArgs setObject:[NSString stringWithFormat:@"%d",timestamp] forKey:@"oauth_nonce"];
+    NSString *nonce = [RSNetflixAPIContext returnMD5Hash:[NSString stringWithFormat:@"%d",timestamp]];
+    [newArgs setObject:nonce forKey:@"oauth_nonce"];
+    //[newArgs setObject:[NSString stringWithFormat:@"%d",timestamp] forKey:@"oauth_nonce"];
     //[newArgs setObject:@"1234" forKey:@"oauth_nonce"];
     
     // oauth_signature_method
