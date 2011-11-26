@@ -22,6 +22,7 @@
 - (void)netflixEngine:(RSNetflixEngine *)engine requestFailed:(NSString *)identifier withError:(NSError *)error;
 
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId;
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId;
 
 @end
 
@@ -49,7 +50,7 @@
 - (NSString *)requestOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
 - (NSString *)accessOAuthToken;
-- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
+- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(void))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;

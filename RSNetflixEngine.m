@@ -131,7 +131,7 @@
     return [self accessOAuthTokenWithSuccessBlock:nil errorBlock:nil];
 }
 
-- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock
+- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(void))successBlock errorBlock:(void (^)(NSError *))errorBlock
 {
     RSNetflixAPIRequest *request = [[[RSNetflixAPIRequest alloc] initWithAPIContext:apiContext] autorelease];
     // Even though we're using blocks, we still make ourselves a delegate of this request, so that
@@ -162,17 +162,14 @@
                          apiContext.oAuthAccessTokenSecret = [response objectForKey:@"oauth_token_secret"];
                          apiContext.userId = [response objectForKey:@"user_id"];
                                                                   
+                         // Now request specific
+                         if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenAccessSucceededForRequestId:)]) {
+                             [delegate netflixEngine:self oAuthTokenAccessSucceededForRequestId:request.identifier];
+                         }
                          
-                         /*
-                          // Now request specific
-                          if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenRequestSucceededWithLoginUrlString:forRequestId:)]) {
-                          [delegate netflixEngine:self oAuthTokenRequestSucceededWithLoginUrlString:completeLoginUrlString forRequestId:request.identifier];
-                          }
-                          
-                          if(successBlock) {
-                          successBlock(completeLoginUrlString);
-                          }
-                          */
+                         if(successBlock) {
+                             successBlock();
+                         }
                          
                      } else {
                          NSLog(@"Got a error response from the server: %@",response);
