@@ -16,7 +16,7 @@
 
 @interface RSNetflixAPIContext (PrivateMethods)
 
-+ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret authorizedToken:(NSString *)authorizedToken authorizedTokenSecret:(NSString *)authorizedTokenSecret httpMethod:(NSString *)httpMethod;
++ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret token:(NSString *)authorizedToken tokenSecret:(NSString *)authorizedTokenSecret httpMethod:(NSString *)httpMethod;
 + (NSString *)queryFromArguments:(NSDictionary *)arguments;
 
 @end
@@ -224,7 +224,7 @@ NSString *oAuthEscape(NSString *string)
     return [parameters componentsJoinedByString:@"&"];
 }
 
-+ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret authorizedToken:(NSString *)authorizedToken authorizedTokenSecret:(NSString *)authorizedTokenSecret httpMethod:(NSString *)httpMethod
++ (NSString *)signedQueryFromArguments:(NSDictionary *)arguments baseURL:(NSString *)baseURL method:(NSString *)method consumerKey:(NSString *)consumerKey sharedSecret:(NSString *)sharedSecret token:(NSString *)token tokenSecret:(NSString *)tokenSecret httpMethod:(NSString *)httpMethod
 {
     // Add our "authentication" parameters to the arguments
     NSMutableDictionary *newArgs = [NSMutableDictionary dictionaryWithDictionary:arguments];
@@ -252,14 +252,9 @@ NSString *oAuthEscape(NSString *string)
     // oauth_version - (optional) if you include this, you must set it to "1.0" (which is also the default)
     [newArgs setObject:@"1.0" forKey:@"oauth_version"];
     
-    // We have a special case for signing, where the call to oauth/access_token, we have the authorizedToken, but
-    // not the authorizedTokenSecret. In this very rare case, we use the authorizedToken during the signing.
-    BOOL isSpecialAccessTokenSecretCall = [method isEqualToString:@"oauth/access_token"];
-    // If we have the authorized token, it means we've been through one oauth/request_token request and the
-    // user granted us permission to access their information.
-    // It also means that if we pass in oauth_token (and sign with it), our quota for requests is much higher
-    if([authorizedToken length] && ([authorizedTokenSecret length] || isSpecialAccessTokenSecretCall)) {
-        [newArgs setObject:authorizedToken forKey:@"oauth_token"];
+    // If we pass in oauth_token (and sign with it), our quota for requests is much higher
+    if([token length] && [tokenSecret length]) {
+        [newArgs setObject:token forKey:@"oauth_token"];
     }
     
     // Generate sorted queryString
@@ -282,13 +277,8 @@ NSString *oAuthEscape(NSString *string)
     
     NSString *baseString = [NSString stringWithFormat:@"%@&%@&%@",httpMethod,encodedBaseURLAndMethod,encodedSortedQueryString];
     
-    // In case this is our special case access_token call, our signature is signed by:
-    // sharedSecret&authorizedToken
-    // instead of:
-    // sharedSecret&authorizedTokenSecret
-    NSString *secondarySecretBit = isSpecialAccessTokenSecretCall ? authorizedToken : authorizedTokenSecret;
     // Create signature
-    NSString *signature = [RSNetflixAPIContext HMAC_SHA1SignatureForText:baseString usingSecret:[NSString stringWithFormat:@"%@&%@",sharedSecret,secondarySecretBit]];
+    NSString *signature = [RSNetflixAPIContext HMAC_SHA1SignatureForText:baseString usingSecret:[NSString stringWithFormat:@"%@&%@",sharedSecret,tokenSecret]];
     
     
     NSString *queryString = [sortedQueryString stringByAppendingString:[NSString stringWithFormat:@"&oauth_signature=%@",oAuthEscape(signature)]];
