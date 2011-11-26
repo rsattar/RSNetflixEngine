@@ -100,10 +100,8 @@
     
     if([urlString hasPrefix:callBackUrl]) {
         // we got called back!
-        
-        // https://api-user.netflix.com/oauth/foo%3A%2F%2Fbar?oauth_token=sq3mnwaqx6t3bawdb85f23yq&oauth_verifier=
 
-        // foo://bar?oauth_token=t8vc52qy8q8j4mc448g3stj5&oauth_verifier=
+        // foo://bar?oauth_token=&oauth_verifier=
         NSDictionary *loginSuccessReponse = [self getQueryDictionaryFromURL:request.URL];
         if([self delegateSupportsSelector:@selector(userLoginViewControllerSucceeded:withResponse:)]) {
             [delegate userLoginViewControllerSucceeded:self withResponse:loginSuccessReponse];

@@ -166,10 +166,13 @@
         [loginViewController autorelease];
     }];
     
-    NSString *oAuthAuthorizedToken = [loginResponse objectForKey:@"oauth_token"];
+    //NSString *oAuthAuthorizedToken = [loginResponse objectForKey:@"oauth_token"];
     // From now on, all signed requests, will actually be made as protected requests, 
     // which has a higher quota, and can do more things
-    netflix.apiContext.oAuthAuthorizedToken = oAuthAuthorizedToken;
+    //netflix.apiContext.oAuthAuthorizedToken = oAuthAuthorizedToken;
+    
+    // Now make the access_token call, so that we have the last peice of the puzzle, the authorized token and SECRET
+    [netflix accessOAuthToken];
     
 }
 - (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController {
