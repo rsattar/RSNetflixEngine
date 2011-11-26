@@ -124,6 +124,70 @@
     
 }
 
+#pragma mark - Accessing OAuth Token Secret
+
+- (NSString *)accessOAuthToken
+{
+    return [self accessOAuthTokenWithSuccessBlock:nil errorBlock:nil];
+}
+
+- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock
+{
+    RSNetflixAPIRequest *request = [[[RSNetflixAPIRequest alloc] initWithAPIContext:apiContext] autorelease];
+    // Even though we're using blocks, we still make ourselves a delegate of this request, so that
+    // we have a singular place we can account for active requests
+    request.delegate = self;
+    
+    [self addRequest:request];
+    
+    return [request callAPIMethod:RSNetflixMethodAccessToken 
+                        arguments:nil 
+                         isSigned:YES 
+                 withSuccessBlock:^(NSDictionary *response) {
+                     NSLog(@"OAuthAccesssTokenRequest completed in RSNetflixEngine with response: \n%@", response);
+                     
+                     if([response objectForKey:@"error"] == nil) {
+                         // we got no error!
+                         
+                         /*
+                          {
+                          "oauth_token" = AUTHORIZED_TOKEN;
+                          "oauth_token_secret" = AUTHORIZED_TOKEN_SECRET;
+                          "user_id" = USER_ID_WHO_AUTHORIZED_US;
+                          }
+                         */
+                         
+                         // Update our API Context with the oAuthRequestToken and oAuthRequestTokenSecret
+                         apiContext.oAuthAuthorizedToken = [response objectForKey:@"oauth_token"];
+                         apiContext.oAuthAuthorizedTokenSecret = [response objectForKey:@"oauth_token_secret"];
+                                                                  
+                         
+                         /*
+                          // Now request specific
+                          if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenRequestSucceededWithLoginUrlString:forRequestId:)]) {
+                          [delegate netflixEngine:self oAuthTokenRequestSucceededWithLoginUrlString:completeLoginUrlString forRequestId:request.identifier];
+                          }
+                          
+                          if(successBlock) {
+                          successBlock(completeLoginUrlString);
+                          }
+                          */
+                         
+                     } else {
+                         NSLog(@"Got a error response from the server: %@",response);
+                     }
+                     
+                 }
+                       errorBlock:^(NSError *error) {
+                           NSLog(@"OAuthTokenRequest failed in RSNetflixEngine!");
+                           
+                           if(errorBlock) {
+                               errorBlock(error);
+                           }
+                           
+                       }];
+}
+
 #pragma mark -
 #pragma mark Catalog methods
 

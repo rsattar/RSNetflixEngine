@@ -48,12 +48,16 @@
 - (NSString *)requestOAuthToken;
 - (NSString *)requestOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
+- (NSString *)accessOAuthToken;
+- (NSString *)accessOAuthTokenWithSuccessBlock:(void (^)(NSString *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
+
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
 
 
 // Declaring REST method names as constants
 extern NSString * const RSNetflixMethodRequestToken;
+extern NSString * const RSNetflixMethodAccessToken;
 
 extern NSString * const RSNetflixMethodSearchCatalogTitles;
 extern NSString * const RSNetflixMethodAutocompleteCatalogTitles;
