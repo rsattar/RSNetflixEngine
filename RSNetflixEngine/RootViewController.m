@@ -122,6 +122,8 @@
         // This is our Authorize Netflix, or Clear User Credentials button
         if([netflix.apiContext.userId length] > 0) {
             cell.textLabel.text = @"Clear User Credentials";
+        } else if(netflixUserAuthorizationInProgress) {
+            cell.textLabel.text = @"Authorizing...";
         } else {
             cell.textLabel.text = @"Authorize Netflix";
         }
