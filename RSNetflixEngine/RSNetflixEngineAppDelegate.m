@@ -132,6 +132,7 @@
     [_navigationController release];
     [loginViewController release];
     [netflix release];
+    [mainViewController release];
     [super dealloc];
 }
 
