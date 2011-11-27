@@ -10,12 +10,62 @@
 
 @implementation RootViewController
 
-@synthesize netflixEngine;
+@synthesize netflixAPIContext;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = YES;
+    
+    // Initialize our netflix engine
+    
+    /*
+    // Initialize RSNetflixEngine
+    netflix = [[RSNetflixEngine alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
+    // Make a test call
+    //[netflix callAPIMethod:@"catalog/titles/autocomplete" arguments:[NSDictionary dictionaryWithObjectsAndKeys:[netflix consumerKey],@"oauth_consumer_key",@"frances%20mc",@"term", nil] isSigned:NO];
+    
+    [netflix callAPIMethod:@"catalog/people" arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
+    */
+    
+    /*
+    RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
+    request.delegate = self;
+    [request callAPIMethod:RSNetflixMethodSearchPeople arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
+    */
+    
+    
+    
+    netflix = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
+    
+    
+    //[netflixEngine searchForTitlesMatchingTerm:@"Star"];
+    //oAuthRequestId = [[netflix requestOAuthToken] retain];
+    /*
+    [netflix requestOAuthTokenWithSuccessBlock:^(NSString *loginUrl) {
+        
+        NSLog(@"OMG Received an oauth response! Login url is: %@",loginUrl);
+    }
+                                    errorBlock:^(NSError *error) {
+                                        NSLog(@"OMG received an error for requesting oauth token via block");
+                                    }];
+    */
+    
+    // Testing blocks out with API Requests
+    /*
+    RSNetflixAPIRequest *request = [[RSNetflixAPIRequest alloc] initWithAPIContext:netflixAPIContext];
+    [request callAPIMethod:RSNetflixMethodSearchPeople 
+                 arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] 
+                  isSigned:YES
+          withSuccessBlock:^(NSDictionary *response) {
+              NSLog(@"Got response back as block! %@",response);
+          } 
+                errorBlock:^(NSError *error) {
+                    NSLog(@"Got error back as block! %@", error);
+                }];
+     */
+    
+    netflix.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -69,7 +119,7 @@
     
     if(indexPath.row == 0) {
         // This is our Authorize Netflix, or Clear User Credentials button
-        if([netflixEngine.apiContext.userId length] > 0) {
+        if([netflix.apiContext.userId length] > 0) {
             cell.textLabel.text = @"Clear User Credentials";
         } else {
             cell.textLabel.text = @"Authorize Netflix";
@@ -85,7 +135,7 @@
 {
     if(section == 0) {
         
-        if([netflixEngine.apiContext.userId length] > 0) {
+        if([netflix.apiContext.userId length] > 0) {
             return @"Signed in; User API available";
         } else {
             return @"Authorizing Netflix greatly increases API request quota.";
@@ -146,15 +196,15 @@
 	*/
     if(indexPath.section == 0 && indexPath.row == 0) {
         // Sign In/Out toggle
-        if([netflixEngine.apiContext.userId length] > 0) {
+        if([netflix.apiContext.userId length] > 0) {
             // need to sign out
-            netflixEngine.apiContext.oAuthAccessToken = nil;
-            netflixEngine.apiContext.oAuthAccessTokenSecret = nil;
-            netflixEngine.apiContext.userId = nil;
+            netflix.apiContext.oAuthAccessToken = nil;
+            netflix.apiContext.oAuthAccessTokenSecret = nil;
+            netflix.apiContext.userId = nil;
             
             [self.tableView reloadData];
         } else {
-            [netflixEngine requestOAuthTokenWithSuccessBlock:^(NSString *loginUrlString) {
+            [netflix requestOAuthTokenWithSuccessBlock:^(NSString *loginUrlString) {
                 [self.tableView reloadData];
             } errorBlock:^(NSError *error) {
                 NSLog(@"Encountered error requesting OAuth token");
@@ -182,8 +232,63 @@
 
 - (void)dealloc
 {
-    [netflixEngine release];
+    [loginViewController release];
+    [netflix release];
+    [netflixAPIContext release];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Engine Request delegate
+
+- (void)netflixEngine:(RSNetflixEngine *)engine requestSucceeded:(NSString *)identifier withResponse:(NSDictionary *)response
+{
+    NSLog(@"RSNetflixEngineDelegate didComplete for request id %@ with response \n%@", identifier, response);
+}
+
+- (void)netflixEngine:(RSNetflixEngine *)engine requestFailed:(NSString *)identifier withError:(NSError *)error
+{
+    NSLog(@"RSNetflixEngineDelegate didFailWithError");
+}
+
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId
+{
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:loginUrl]];
+    loginViewController = [[RSUserLoginViewController alloc] initWithNibName:@"RSUserLoginViewController" bundle:[NSBundle mainBundle]];
+    loginViewController.delegate = self;
+    loginViewController.loginUrl = loginUrl;
+    loginViewController.callBackUrl = netflixAPIContext.userLoginCallbackUrl;
+    
+    [self.navigationController presentModalViewController:loginViewController animated:YES];
+}
+
+- (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId
+{
+    // Make a access-only request, like users/user_id
+    [netflix retrieveUserInformationForUserId:netflix.apiContext.userId];
+    
+}
+
+#pragma - RSUserLoginViewControllerDelegate
+
+- (void)userLoginViewControllerSucceeded:(RSUserLoginViewController *)viewController withResponse:(NSDictionary *)loginResponse {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [loginViewController autorelease];
+    }];
+    
+    //NSString *oAuthAuthorizedToken = [loginResponse objectForKey:@"oauth_token"];
+    // From now on, all signed requests, will actually be made as protected requests, 
+    // which has a higher quota, and can do more things
+    //netflix.apiContext.oAuthAuthorizedToken = oAuthAuthorizedToken;
+    
+    // Now make the access_token call, so that we have the last peice of the puzzle, the authorized token and SECRET
+    [netflix accessOAuthToken];
+    
+}
+- (void)userLoginViewControllerCancelled:(RSUserLoginViewController *)viewController {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [loginViewController autorelease];
+    }];
 }
 
 @end
