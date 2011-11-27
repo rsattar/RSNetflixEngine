@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RSNetflixEngine.h"
 #import "RSUserLoginViewController.h"
+#import "RootViewController.h"
 
 @interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate, RSNetflixEngineDelegate, RSUserLoginViewControllerDelegate> {
 
@@ -17,6 +18,7 @@
     
     RSUserLoginViewController *loginViewController;
     
+    IBOutlet RootViewController *mainViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
