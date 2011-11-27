@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSNetflixEngine.h"
 
 @interface RootViewController : UITableViewController {
-
+    RSNetflixEngine *netflixEngine;
 }
+
+@property(retain, nonatomic) RSNetflixEngine *netflixEngine;
 
 
 @end

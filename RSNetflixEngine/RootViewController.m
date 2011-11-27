@@ -10,6 +10,8 @@
 
 @implementation RootViewController
 
+@synthesize netflixEngine;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
