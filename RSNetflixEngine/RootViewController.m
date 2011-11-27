@@ -17,6 +17,8 @@
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = YES;
     
+    netflixUserAuthorizationInProgress = NO;
+    
     // Initialize our netflix engine
     
     /*
@@ -33,7 +35,6 @@
     request.delegate = self;
     [request callAPIMethod:RSNetflixMethodSearchPeople arguments:[NSDictionary dictionaryWithObjectsAndKeys:@"10",@"max_results",@"frances mc",@"term", nil] isSigned:YES];
     */
-    
     
     
     netflix = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
@@ -201,16 +202,18 @@
             netflix.apiContext.oAuthAccessToken = nil;
             netflix.apiContext.oAuthAccessTokenSecret = nil;
             netflix.apiContext.userId = nil;
-            
-            [self.tableView reloadData];
         } else {
+            netflixUserAuthorizationInProgress = YES;
             [netflix requestOAuthTokenWithSuccessBlock:^(NSString *loginUrlString) {
                 [self.tableView reloadData];
             } errorBlock:^(NSError *error) {
+                netflixUserAuthorizationInProgress = NO;
                 NSLog(@"Encountered error requesting OAuth token");
+                [self.tableView reloadData];
             }];
         }
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self.tableView reloadData];
     }
 }
 
@@ -264,6 +267,11 @@
 
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId
 {
+    // We got access!
+    
+    netflixUserAuthorizationInProgress = NO;
+    [self.tableView reloadData];
+    
     // Make a access-only request, like users/user_id
     [netflix retrieveUserInformationForUserId:netflix.apiContext.userId];
     

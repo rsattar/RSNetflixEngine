@@ -15,6 +15,8 @@
     RSNetflixAPIContext *netflixAPIContext;
     
     RSUserLoginViewController *loginViewController;
+    
+    BOOL netflixUserAuthorizationInProgress;
 }
 
 @property(retain, nonatomic) RSNetflixAPIContext *netflixAPIContext;
