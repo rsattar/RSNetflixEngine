@@ -228,12 +228,12 @@
 
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+    [netflix release];
 }
 
 - (void)dealloc
 {
     [loginViewController release];
-    [netflix release];
     [netflixAPIContext release];
     [super dealloc];
 }

@@ -12,7 +12,6 @@
 
 @interface RSNetflixEngineAppDelegate : NSObject <UIApplicationDelegate> {
 
-    RSNetflixEngine *netflix;
     RSNetflixAPIContext *netflixAPIContext;
     
     IBOutlet RootViewController *mainViewController;

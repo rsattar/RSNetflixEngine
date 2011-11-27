@@ -77,7 +77,6 @@
 {
     [_window release];
     [_navigationController release];
-    [netflix release];
     [mainViewController release];
     [super dealloc];
 }
