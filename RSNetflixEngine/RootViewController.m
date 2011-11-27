@@ -15,6 +15,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.clearsSelectionOnViewWillAppear = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,7 +54,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 1;
 }
 
 // Customize the appearance of table view cells.
@@ -65,9 +66,32 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
+    
+    if(indexPath.row == 0) {
+        // This is our Authorize Netflix, or Clear User Credentials button
+        if([netflixEngine.apiContext.userId length] > 0) {
+            cell.textLabel.text = @"Clear User Credentials";
+        } else {
+            cell.textLabel.text = @"Authorize Netflix";
+        }
+        cell.textLabel.textAlignment = UITextAlignmentCenter;
+    }
 
     // Configure the cell.
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    if(section == 0) {
+        
+        if([netflixEngine.apiContext.userId length] > 0) {
+            return @"Signed in; User API available";
+        } else {
+            return @"Authorizing Netflix greatly increases API request quota.";
+        }
+    }
+    return nil;
 }
 
 /*
@@ -120,6 +144,24 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
     [detailViewController release];
 	*/
+    if(indexPath.section == 0 && indexPath.row == 0) {
+        // Sign In/Out toggle
+        if([netflixEngine.apiContext.userId length] > 0) {
+            // need to sign out
+            netflixEngine.apiContext.oAuthAccessToken = nil;
+            netflixEngine.apiContext.oAuthAccessTokenSecret = nil;
+            netflixEngine.apiContext.userId = nil;
+            
+            [self.tableView reloadData];
+        } else {
+            [netflixEngine requestOAuthTokenWithSuccessBlock:^(NSString *loginUrlString) {
+                [self.tableView reloadData];
+            } errorBlock:^(NSError *error) {
+                NSLog(@"Encountered error requesting OAuth token");
+            }];
+        }
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,6 +182,7 @@
 
 - (void)dealloc
 {
+    [netflixEngine release];
     [super dealloc];
 }
 

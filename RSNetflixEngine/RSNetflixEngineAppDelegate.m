@@ -60,8 +60,14 @@
     
     netflix = [[RSNetflixEngine alloc] initWithAPIContext:netflixAPIContext];
     netflix.delegate = self;
+    
+    // Let the RootViewController see the netflix engine, so it can query it for information when building the UI
+    mainViewController.netflixEngine = netflix;
+    
+    
     //[netflixEngine searchForTitlesMatchingTerm:@"Star"];
     //oAuthRequestId = [[netflix requestOAuthToken] retain];
+    /*
     [netflix requestOAuthTokenWithSuccessBlock:^(NSString *loginUrl) {
         
         NSLog(@"OMG Received an oauth response! Login url is: %@",loginUrl);
@@ -69,7 +75,7 @@
                                     errorBlock:^(NSError *error) {
                                         NSLog(@"OMG received an error for requesting oauth token via block");
                                     }];
-    
+    */
     
     // Testing blocks out with API Requests
     /*
