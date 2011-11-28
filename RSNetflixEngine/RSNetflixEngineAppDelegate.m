@@ -18,9 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSData *apiContextData = (NSData *)[[NSUserDefaults standardUserDefaults] objectForKey:@"netflixAPIContext"];
+    if(apiContextData != nil) {
+        netflixAPIContext = [[NSKeyedUnarchiver unarchiveObjectWithData:apiContextData] retain];
+    } else {
+        netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
+    }
     
-    
-    netflixAPIContext = [[RSNetflixAPIContext alloc] initWithConsumerKey:RS_NETFLIX_ENGINE_API_KEY sharedSecret:RS_NETFLIX_ENGINE_SHARED_SECRET applicationName:RS_NETFLIX_ENGINE_APPLICATION_NAME];
     NSString *loginCallback = @"foo://bar";//@"http://doesnotexistbutuniqueenoughtocatch.com";
     netflixAPIContext.userLoginCallbackUrl = loginCallback;//[self urlEncodedStringFromString:loginCallback];
     
@@ -48,6 +52,8 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    NSData *apiContextData = [NSKeyedArchiver archivedDataWithRootObject:netflixAPIContext];
+    [[NSUserDefaults standardUserDefaults] setObject:apiContextData forKey:@"netflixAPIContext"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
