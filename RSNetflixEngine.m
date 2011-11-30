@@ -97,20 +97,36 @@
                  withSuccessBlock:^(NSDictionary *response) {
                      NSLog(@"OAuthTokenRequest completed in RSNetflixEngine!");
                      
-                     // Update our API Context with the oAuthRequestToken and oAuthRequestTokenSecret
-                     apiContext.oAuthRequestToken = [response objectForKey:@"oauth_token"];
-                     apiContext.oAuthRequestTokenSecret = [response objectForKey:@"oauth_token_secret"];
-                     apiContext.oAuthLoginUrlFragment = [NSURL URLWithString:[response objectForKey:@"login_url"]];
-                     
-                     NSString *completeLoginUrlString = [apiContext constructUserLoginUrlString];
-                     
-                     // Now request specific
-                     if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenRequestSucceededWithLoginUrlString:forRequestId:)]) {
-                         [delegate netflixEngine:self oAuthTokenRequestSucceededWithLoginUrlString:completeLoginUrlString forRequestId:request.identifier];
-                     }
-                     
-                     if(successBlock) {
-                         successBlock(completeLoginUrlString);
+                     if([response objectForKey:@"status"] == nil) {
+                         
+                         // Update our API Context with the oAuthRequestToken and oAuthRequestTokenSecret
+                         apiContext.oAuthRequestToken = [response objectForKey:@"oauth_token"];
+                         apiContext.oAuthRequestTokenSecret = [response objectForKey:@"oauth_token_secret"];
+                         apiContext.oAuthLoginUrlFragment = [NSURL URLWithString:[response objectForKey:@"login_url"]];
+                         
+                         NSString *completeLoginUrlString = [apiContext constructUserLoginUrlString];
+                         
+                         // Now request specific
+                         if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenRequestSucceededWithLoginUrlString:forRequestId:)]) {
+                             [delegate netflixEngine:self oAuthTokenRequestSucceededWithLoginUrlString:completeLoginUrlString forRequestId:request.identifier];
+                         }
+                         
+                         if(successBlock) {
+                             successBlock(completeLoginUrlString);
+                         }
+                         
+                     } else {
+                         /* Could receive a response like:
+                            {
+                                status =     {
+                                    message = "Internal Error";
+                                    "status_code" = 500;
+                                };
+                            }
+                         */
+                         NSInteger statusCode = [[response valueForKeyPath:@"status.status_code"] intValue];
+                         NSString *message = [response valueForKeyPath:@"status.message"];
+                         NSLog(@"Server responded with statusCode: %d '%@'",statusCode,message);
                      }
                      
                  }
