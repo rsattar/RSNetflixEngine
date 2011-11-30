@@ -67,6 +67,11 @@
      */
     
     netflix.delegate = self;
+    
+    // Build a cheap and simple model to build our table view UI with
+    buttonOrder = [[NSMutableArray alloc] initWithObjects:
+                   @"titleSearch", 
+                   nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,12 +105,17 @@
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 1 + [buttonOrder count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if(section == 0) {
+        return 1;
+    } else if(section == 1) {
+        return [buttonOrder count];
+    }
+    return 0;
 }
 
 // Customize the appearance of table view cells.
@@ -118,7 +128,8 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    if(indexPath.row == 0) {
+    
+    if(indexPath.section == 0 && indexPath.row == 0) {
         // This is our Authorize Netflix, or Clear User Credentials button
         if([netflix.apiContext.userId length] > 0) {
             cell.textLabel.text = @"Clear User Credentials";
@@ -128,6 +139,12 @@
             cell.textLabel.text = @"Authorize Netflix";
         }
         cell.textLabel.textAlignment = UITextAlignmentCenter;
+    } else if(indexPath.section == 1) {
+        
+        NSString *buttonId = [buttonOrder objectAtIndex:indexPath.row];
+        if([buttonId isEqualToString:@"titleSearch"]) {
+            cell.textLabel.text = @"Search Titles for 'Star'";
+        }
     }
 
     // Configure the cell.
@@ -143,6 +160,8 @@
         } else {
             return @"Authorizing Netflix greatly increases API request quota.";
         }
+    } else if (section == 1) {
+        return @"These currently don't show the response, so just *assume* they worked :)";
     }
     return nil;
 }
@@ -214,9 +233,22 @@
                 [self.tableView reloadData];
             }];
         }
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self.tableView reloadData];
+    } else if(indexPath.section == 1) {
+        
+        NSString *buttonId = [buttonOrder objectAtIndex:indexPath.row];
+        if([buttonId isEqualToString:@"titleSearch"]) {
+            
+            [netflix searchForTitlesMatchingTerm:@"Star" withMaxResults:5 andPageOffset:-1 
+                                withSuccessBlock:^(NSDictionary *response) {
+            
+                                } errorBlock:^(NSError *error) {
+            
+                                }];
+        }
     }
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -230,6 +262,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [buttonOrder release];
 
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;

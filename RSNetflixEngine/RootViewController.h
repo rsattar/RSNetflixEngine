@@ -17,6 +17,8 @@
     RSUserLoginViewController *loginViewController;
     
     BOOL netflixUserAuthorizationInProgress;
+    
+    NSMutableArray *buttonOrder;
 }
 
 @property(retain, nonatomic) RSNetflixAPIContext *netflixAPIContext;
