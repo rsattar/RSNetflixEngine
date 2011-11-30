@@ -82,12 +82,22 @@
         self.sharedSecret = [decoder decodeObjectForKey:@"sharedSecret"];
         self.applicationName = [decoder decodeObjectForKey:@"applicationName"];
         
-        self.oAuthRequestToken = [decoder decodeObjectForKey:@"oAuthRequestToken"];
-        self.oAuthRequestTokenSecret = [decoder decodeObjectForKey:@"oAuthRequestTokenSecret"];
+        // We don't save/load request token/secrets because most likely they are expired
+        self.oAuthRequestToken = @"";
+        self.oAuthRequestTokenSecret = @"";
         
         self.oAuthAccessToken = [decoder decodeObjectForKey:@"oAuthAccessToken"];
+        if(self.oAuthAccessToken == nil) {
+            self.oAuthAccessToken = @"";
+        }
         self.oAuthAccessTokenSecret = [decoder decodeObjectForKey:@"oAuthAccessTokenSecret"];
+        if(self.oAuthAccessTokenSecret == nil) {
+            self.oAuthAccessTokenSecret = @"";
+        }
         self.userId = [decoder decodeObjectForKey:@"userId"];
+        if(self.userId == nil) {
+            self.userId = @"";
+        }
         
         self.RESTAPIEndPoint = [decoder decodeObjectForKey:@"RESTAPIEndPoint"];
         self.userLoginCallbackUrl = [decoder decodeObjectForKey:@"userLoginCallbackUrl"];
@@ -103,8 +113,7 @@
     [encoder encodeObject:sharedSecret forKey:@"sharedSecret"];
     [encoder encodeObject:applicationName forKey:@"applicationName"];
     
-    [encoder encodeObject:oAuthRequestToken forKey:@"oAuthRequestToken"];
-    [encoder encodeObject:oAuthRequestTokenSecret forKey:@"oAuthRequestTokenSecret"];
+    // NOTE: We don't save the request token and secret, because they expire within 10 min
     
     [encoder encodeObject:oAuthAccessToken forKey:@"oAuthAccessToken"];
     [encoder encodeObject:oAuthAccessTokenSecret forKey:@"oAuthAccessTokenSecret"];

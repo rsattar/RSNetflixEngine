@@ -163,6 +163,9 @@
                          apiContext.oAuthAccessToken = [response objectForKey:@"oauth_token"];
                          apiContext.oAuthAccessTokenSecret = [response objectForKey:@"oauth_token_secret"];
                          apiContext.userId = [response objectForKey:@"user_id"];
+                         // Now we can clear our request token/secret, because they are useless
+                         apiContext.oAuthRequestToken = @"";
+                         apiContext.oAuthRequestTokenSecret = @"";
                                                                   
                          // Now request specific
                          if([self isValidDelegateForSelector:@selector(netflixEngine:oAuthTokenAccessSucceededForRequestId:)]) {
