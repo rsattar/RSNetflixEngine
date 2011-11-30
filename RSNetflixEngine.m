@@ -267,6 +267,11 @@
 
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset
 {
+    return [self searchForTitlesMatchingTerm:term withMaxResults:maxResults andPageOffset:pageOffset withSuccessBlock:nil errorBlock:nil];
+}
+
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock
+{
     if(maxResults < 0)
     {
         maxResults = 25;
@@ -284,7 +289,16 @@
                                nil];
     
     [self addRequest:request];
-    return [request callAPIMethod:RSNetflixMethodSearchCatalogTitles arguments:arguments isSigned:YES httpMethod:RSNetflixAPIHttpMethodGet];
+    return [request callAPIMethod:RSNetflixMethodSearchCatalogTitles 
+                        arguments:arguments 
+                         isSigned:YES 
+                       httpMethod:RSNetflixAPIHttpMethodGet
+                 withSuccessBlock:^(NSDictionary *response) {
+                
+                 }
+                       errorBlock:^(NSError *error) {
+                
+                       }];
 }
 
 

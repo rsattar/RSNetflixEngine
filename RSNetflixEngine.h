@@ -60,6 +60,7 @@
 #pragma mark - Signed Requests
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
+- (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
 
 // Declaring REST method names as constants
