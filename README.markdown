@@ -1,7 +1,7 @@
-ObjectiveFlickr
+RSNetflixEngine
 ===============
 
-ObjectiveFlickr is a useful library to communicate with the Netflix API.
+RSNetflixEngine is a useful library to communicate with the Netflix API.
 
 Quick Start: How to get RSNetflixEngine and set it up
 =====================================
