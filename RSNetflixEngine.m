@@ -294,10 +294,17 @@
                          isSigned:YES 
                        httpMethod:RSNetflixAPIHttpMethodGet
                  withSuccessBlock:^(NSDictionary *response) {
-                
+                     if([self isValidDelegateForSelector:@selector(netflixEngine:titleSearchForTerm:returnedWithResponse:forRequestId:)]) {
+                         [delegate netflixEngine:self titleSearchForTerm:term returnedWithResponse:response forRequestId:request.identifier];
+                     }
+                     if(successBlock) {
+                         successBlock(response);
+                     }
                  }
                        errorBlock:^(NSError *error) {
-                
+                           if(errorBlock) {
+                               errorBlock(error);
+                           }
                        }];
 }
 

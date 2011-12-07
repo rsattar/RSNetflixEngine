@@ -24,6 +24,7 @@
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenRequestSucceededWithLoginUrlString:(NSString *)loginUrl forRequestId:(NSString *)requestId;
 - (void)netflixEngine:(RSNetflixEngine *)engine oAuthTokenAccessSucceededForRequestId:(NSString *)requestId;
 - (void)netflixEngine:(RSNetflixEngine *)engine userInformationRetrieved:(NSDictionary *)information forRequestId:(NSString *)requestId;
+- (void)netflixEngine:(RSNetflixEngine *)engine titleSearchForTerm:(NSString *)term returnedWithResponse:(NSDictionary *)response forRequestId:(NSString *)requestId;
 
 @end
 
