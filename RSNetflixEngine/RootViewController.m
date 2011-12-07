@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "RawResponseViewController.h"
 
 @implementation RootViewController
 
@@ -241,8 +242,14 @@
             
             [netflix searchForTitlesMatchingTerm:@"Star" withMaxResults:5 andPageOffset:-1 
                                 withSuccessBlock:^(NSDictionary *response) {
-            
+                                    RawResponseViewController *responseViewController = [[[RawResponseViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+                                    [responseViewController displayResponse:response];
+                                    [self.navigationController pushViewController:responseViewController animated:YES];
+                                    
                                 } errorBlock:^(NSError *error) {
+                                    RawResponseViewController *responseViewController = [[[RawResponseViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+                                    [responseViewController displayError:error withAdditionalText:@""];
+                                    [self.navigationController pushViewController:responseViewController animated:YES];
             
                                 }];
         }

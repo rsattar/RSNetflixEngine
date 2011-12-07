@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65348A6E148EFC15006D1BFE /* RawResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65348A6C148EFC15006D1BFE /* RawResponseViewController.m */; };
+		65348A6F148EFC15006D1BFE /* RawResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65348A6D148EFC15006D1BFE /* RawResponseViewController.xib */; };
 		655EEEF7147CD1A600229590 /* RSUserLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */; };
 		655EEEF8147CD1A600229590 /* RSUserLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */; };
 		6595FC871393364D0061AA35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6595FC861393364D0061AA35 /* UIKit.framework */; };
@@ -26,6 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65348A6B148EFC15006D1BFE /* RawResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawResponseViewController.h; sourceTree = "<group>"; };
+		65348A6C148EFC15006D1BFE /* RawResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RawResponseViewController.m; sourceTree = "<group>"; };
+		65348A6D148EFC15006D1BFE /* RawResponseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RawResponseViewController.xib; sourceTree = "<group>"; };
 		655EEEF4147CD1A600229590 /* RSUserLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUserLoginViewController.h; sourceTree = "<group>"; };
 		655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSUserLoginViewController.m; sourceTree = "<group>"; };
 		655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSUserLoginViewController.xib; sourceTree = "<group>"; };
@@ -104,6 +109,9 @@
 		6595FC8C1393364E0061AA35 /* RSNetflixEngine */ = {
 			isa = PBXGroup;
 			children = (
+				65348A6B148EFC15006D1BFE /* RawResponseViewController.h */,
+				65348A6C148EFC15006D1BFE /* RawResponseViewController.m */,
+				65348A6D148EFC15006D1BFE /* RawResponseViewController.xib */,
 				655EEEF4147CD1A600229590 /* RSUserLoginViewController.h */,
 				655EEEF5147CD1A600229590 /* RSUserLoginViewController.m */,
 				655EEEF6147CD1A600229590 /* RSUserLoginViewController.xib */,
@@ -208,6 +216,7 @@
 				6595FC9A1393364E0061AA35 /* MainWindow.xib in Resources */,
 				6595FCA01393364E0061AA35 /* RootViewController.xib in Resources */,
 				655EEEF8147CD1A600229590 /* RSUserLoginViewController.xib in Resources */,
+				65348A6F148EFC15006D1BFE /* RawResponseViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +236,7 @@
 				65CDF047139C2921008F4C9E /* RSNetflixAPIRequest.m in Sources */,
 				65CDF04A139C29E5008F4C9E /* RSNetflixAPIContext.m in Sources */,
 				655EEEF7147CD1A600229590 /* RSUserLoginViewController.m in Sources */,
+				65348A6E148EFC15006D1BFE /* RawResponseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

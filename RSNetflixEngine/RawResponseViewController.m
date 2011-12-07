@@ -9,6 +9,7 @@
 #import "RawResponseViewController.h"
 
 @implementation RawResponseViewController
+@synthesize responseTextView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,10 +34,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if(textToShow) {
+        responseTextView.text = textToShow;
+        [textToShow release];
+    }
 }
 
 - (void)viewDidUnload
 {
+    [self setResponseTextView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -48,4 +54,31 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [responseTextView release];
+    [textToShow release];
+    [super dealloc];
+}
+
+#pragma mark - Displaying information
+- (void)displayResponse:(NSDictionary *)response
+{
+    NSString *responseText = [NSString stringWithFormat:@"%@",response];
+    if(responseTextView) {
+        responseTextView.text = responseText;
+    } else {
+        textToShow = [responseText retain];
+    }
+}
+
+- (void)displayError:(NSError *)error withAdditionalText:(NSString *)text
+{
+    
+    NSString *errorText = [NSString stringWithFormat:@"%@\n%@",error,text];
+    if(responseTextView) {
+        responseTextView.text = errorText;
+    } else {
+        textToShow = [errorText retain];
+    }
+}
 @end
