@@ -72,6 +72,7 @@
     // Build a cheap and simple model to build our table view UI with
     buttonOrder = [[NSMutableArray alloc] initWithObjects:
                    @"titleSearch", 
+                   @"userQueues",
                    nil];
 }
 
@@ -145,6 +146,8 @@
         NSString *buttonId = [buttonOrder objectAtIndex:indexPath.row];
         if([buttonId isEqualToString:@"titleSearch"]) {
             cell.textLabel.text = @"Search Titles for 'Star'";
+        } else if([buttonId isEqualToString:@"userQueues"]) {
+            cell.textLabel.text = @"User Queues";
         }
     }
 
@@ -252,6 +255,30 @@
                                     [self.navigationController pushViewController:responseViewController animated:YES];
             
                                 }];
+        } else if([buttonId isEqualToString:@"userQueues"]) {
+            
+            /*
+             ^(NSDictionary *response) {
+             RawResponseViewController *responseViewController = [[[RawResponseViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+             [responseViewController displayResponse:response];
+             [self.navigationController pushViewController:responseViewController animated:YES];
+             
+             }
+             */
+            
+            [netflix retrieveQueuesForUserId:netflix.apiContext.userId 
+                            withSuccessBlock:^(NSDictionary *response) {
+                                RawResponseViewController *responseViewController = [[[RawResponseViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+                                [responseViewController displayResponse:response];
+                                [self.navigationController pushViewController:responseViewController animated:YES];
+                
+                            }
+                                  errorBlock:^(NSError *error) {
+                                      RawResponseViewController *responseViewController = [[[RawResponseViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+                                      [responseViewController displayError:error withAdditionalText:@""];
+                                      [self.navigationController pushViewController:responseViewController animated:YES];
+                                    
+                                  }];
         }
     }
     

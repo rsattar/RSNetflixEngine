@@ -208,6 +208,9 @@
 }
 
 
+#pragma mark - User methods
+
+
 - (NSString *)retrieveUserInformationForUserId:(NSString *)userId
 {
     return [self retrieveUserInformationForUserId:userId withSuccessBlock:nil errorBlock:nil];
@@ -228,6 +231,54 @@
                        httpMethod:RSNetflixAPIHttpMethodGet
                  withSuccessBlock:^(NSDictionary *response) {
                      NSLog(@"retrieveUserInformationForUserId completed in RSNetflixEngine with response: \n%@", response);
+                     
+                     if([response objectForKey:@"error"] == nil) {
+                         // we got no error!
+                         
+                         // Now request specific
+                         if([self isValidDelegateForSelector:@selector(netflixEngine:userInformationRetrieved:forRequestId:)]) {
+                             [delegate netflixEngine:self userInformationRetrieved:response forRequestId:request.identifier];
+                         }
+                         
+                         if(successBlock) {
+                             successBlock(response);
+                         }
+                         
+                     } else {
+                         NSLog(@"Got a error response from the server: %@",response);
+                     }
+                     
+                 }
+                       errorBlock:^(NSError *error) {
+                           NSLog(@"retrieveUserInformationForUserId failed in RSNetflixEngine!");
+                           
+                           if(errorBlock) {
+                               errorBlock(error);
+                           }
+                           
+                       }]; 
+}
+
+
+- (NSString *)retrieveQueuesForUserId:(NSString *)userId withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock
+{
+    RSNetflixAPIRequest *request = [[[RSNetflixAPIRequest alloc] initWithAPIContext:apiContext] autorelease];
+    // Even though we're using blocks, we still make ourselves a delegate of this request, so that
+    // we have a singular place we can account for active requests
+    request.delegate = self;
+    
+    [self addRequest:request];
+    
+    /*
+    return [request callAPIURLString:@"http://api.netflix.com/catalog/titles/movies/70052691" isSigned:YES httpMethod:RSNetflixAPIHttpMethodGet withSuccessBlock:successBlock errorBlock:errorBlock];
+    */
+    
+    return [request callAPIMethod:[NSString stringWithFormat:@"users/%@/queues/disc/available",userId] 
+                        arguments:nil 
+                         isSigned:YES 
+                       httpMethod:RSNetflixAPIHttpMethodGet
+                 withSuccessBlock:^(NSDictionary *response) {
+                     NSLog(@"retrieveQueuesForUserId completed in RSNetflixEngine with response: \n%@", response);
                      
                      if([response objectForKey:@"error"] == nil) {
                          // we got no error!

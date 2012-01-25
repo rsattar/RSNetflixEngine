@@ -58,6 +58,9 @@
 - (NSString *)retrieveUserInformationForUserId:(NSString *)userId;
 - (NSString *)retrieveUserInformationForUserId:(NSString *)userId withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
 
+- (NSString *)retrieveQueuesForUserId:(NSString *)userId withSuccessBlock:(void (^)(NSDictionary *))successBlock errorBlock:(void (^)(NSError *))errorBlock;
+
+
 #pragma mark - Signed Requests
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term;
 - (NSString *)searchForTitlesMatchingTerm:(NSString*)term withMaxResults:(NSInteger)maxResults andPageOffset:(NSInteger)pageOffset;
