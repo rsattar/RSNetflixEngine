@@ -114,12 +114,12 @@ static NSMutableArray *activeRequests = nil;
     return [self callAPIMethod:methodName arguments:arguments isSigned:isSigned httpMethod:httpMethod];
 }
 
-- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod
+- (NSString *)callAPIURLString:(NSString *)urlString additionalArguments:(NSDictionary *)additionalArgs isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod
 {
-    return [self callAPIURLString:urlString isSigned:isSigned httpMethod:httpMethod withSuccessBlock:nil errorBlock:nil];
+    return [self callAPIURLString:urlString additionalArguments:additionalArgs isSigned:isSigned httpMethod:httpMethod withSuccessBlock:nil errorBlock:nil];
 }
 
-- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)inSuccessBlock errorBlock:(RSNetflixAPIRequestErrorBlock)inErrorBlock
+- (NSString *)callAPIURLString:(NSString *)urlString additionalArguments:(NSDictionary *)additionalArgs isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)inSuccessBlock errorBlock:(RSNetflixAPIRequestErrorBlock)inErrorBlock
 {
     // Let's parse this url String and extract a http method
     NSURL *url = [NSURL URLWithString:urlString];
@@ -142,6 +142,15 @@ static NSMutableArray *activeRequests = nil;
                              forKey:[keyAndValue objectAtIndex:0]];
             }
         }
+        // Overwrite any of the URL args with ones we've passed in
+        if(additionalArgs != nil) {
+            if(arguments == nil) {
+                arguments = [NSMutableDictionary dictionaryWithDictionary:additionalArgs];
+            } else {
+                [arguments addEntriesFromDictionary:additionalArgs];
+            }
+        }
+        
         return [self callAPIMethod:method arguments:arguments isSigned:isSigned httpMethod:httpMethod withSuccessBlock:inSuccessBlock errorBlock:inErrorBlock];
     }
     return nil;
