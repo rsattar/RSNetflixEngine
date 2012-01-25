@@ -114,6 +114,39 @@ static NSMutableArray *activeRequests = nil;
     return [self callAPIMethod:methodName arguments:arguments isSigned:isSigned httpMethod:httpMethod];
 }
 
+- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod
+{
+    return [self callAPIURLString:urlString isSigned:isSigned httpMethod:httpMethod withSuccessBlock:nil errorBlock:nil];
+}
+
+- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)inSuccessBlock errorBlock:(RSNetflixAPIRequestErrorBlock)inErrorBlock
+{
+    // Let's parse this url String and extract a http method
+    NSURL *url = [NSURL URLWithString:urlString];
+    if(url) {
+        NSString *method = [url.path substringFromIndex:1];
+        NSString *query = url.query;
+        /*
+        NSInteger indexOfSlashAfterHost = [urlString rangeOfString:@"/" options:NSCaseInsensitiveSearch range:NSMakeRange(8, urlString.length-8)].location;
+        NSString *urlBase = [NSString stringWithFormat:@"%@/",[urlString substringToIndex:indexOfSlashAfterHost]];
+        */
+        // Create arguments NSDictionary from query string
+        NSMutableDictionary *arguments = nil;
+        if(query) {
+            arguments = [NSMutableDictionary dictionary];
+            NSArray *pairs = [query componentsSeparatedByString:@"&"];
+            for(NSInteger i=0; i<pairs.count; i++) {
+                NSArray *keyAndValue = [[pairs objectAtIndex:i] componentsSeparatedByString:@"="];
+                // "Un" escape the value, because we'll be later escaping it again
+                [arguments setValue:[[keyAndValue objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] 
+                             forKey:[keyAndValue objectAtIndex:0]];
+            }
+        }
+        return [self callAPIMethod:method arguments:arguments isSigned:isSigned httpMethod:httpMethod withSuccessBlock:inSuccessBlock errorBlock:inErrorBlock];
+    }
+    return nil;
+}
+
 - (void)notifyDelegateOfError:(NSError *)error
 {
     if([delegate respondsToSelector:@selector(netflixAPIRequest:didFailWithError:)]) {

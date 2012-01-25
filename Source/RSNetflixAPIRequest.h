@@ -47,6 +47,11 @@ typedef void (^RSNetflixAPIRequestErrorBlock)(NSError *);
 - (id)initWithAPIContext:(RSNetflixAPIContext *)inAPIContext;
 - (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod;
 - (NSString *)callAPIMethod:(NSString *)methodName arguments:(NSDictionary *)arguments isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)successBlock errorBlock:(RSNetflixAPIRequestErrorBlock)errorBlock;
+// Many Netflix responses are in the form of partial urls 
+// (without parameters and signing) that refer to items, so 
+// let's make it easy to request those urls
+- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod;
+- (NSString *)callAPIURLString:(NSString *)urlString isSigned:(BOOL)isSigned httpMethod:(NSString *)httpMethod withSuccessBlock:(RSNetflixAPIRequestSuccessBlock)successBlock errorBlock:(RSNetflixAPIRequestErrorBlock)errorBlock;
 
 #pragma - Constants for HTTP Methods
 
