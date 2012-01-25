@@ -76,6 +76,9 @@ static NSMutableArray *activeRequests = nil;
     if([newArgs objectForKey:@"output"] == nil) {
         [newArgs setObject:@"json" forKey:@"output"];
     }
+    if([newArgs objectForKey:@"expand"] == nil) {
+        [newArgs setObject:@"all" forKey:@"expand"];
+    }
     
     NSString *query = nil;
     if(isSigned) {
